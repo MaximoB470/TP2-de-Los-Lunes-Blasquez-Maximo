@@ -21,7 +21,6 @@ public class SkipRound : Command
 
         }
     }
-
     public override void execute(string[] args)
     {
         if (manager == null)
@@ -31,8 +30,6 @@ public class SkipRound : Command
         if (manager != null)
         {
             manager.ForceWave = true;
-
         }
     }
-
 }

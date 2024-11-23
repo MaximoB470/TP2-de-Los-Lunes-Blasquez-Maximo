@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject victoryMenu;
     [SerializeField] private GameObject defeatMenu;
-    [SerializeField] private GameObject UI;
 
     public bool isActive = false;
     public bool ForceWave;
@@ -32,7 +31,6 @@ public class GameManager : MonoBehaviour
         ChangeState(new PlayingState(this));
         StartWave();
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -46,16 +44,12 @@ public class GameManager : MonoBehaviour
         {
             currentState.Execute();
         }
-
         if(ForceWave == true) 
         {
             StartCoroutine(WaitBeforeNextWave());
             enemiesRemaining = 0;
         }
-
-
     }
-
     private void StartWave()
     {
         Debug.Log("Iniciando oleada " + currentWave);
@@ -66,7 +60,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(SpawnEnemies());
 
-        ForceWave = false;
+        
         isActive = false;
     }
 
@@ -79,7 +73,6 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(selectedSpawner.MinimumSpawnTime, selectedSpawner.MaximumSpawnTime));
         }
     }
-
     public void EnemyDefeated()
     {
         enemiesRemaining--;
@@ -92,7 +85,6 @@ public class GameManager : MonoBehaviour
             isActive = true;
         }
     }
-
     public IEnumerator WaitBeforeNextWave()
     {
         Debug.Log("Rest Time " + waveRestTime);
@@ -101,9 +93,8 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(waveRestTime);
         currentWave++;
         StartWave();
-        
+        ForceWave = false;
     }
-
     public void ChangeState(GameState newState)
     {
         if (currentState != null)
@@ -117,7 +108,6 @@ public class GameManager : MonoBehaviour
             currentState.Enter();
         }
     }
-
     public void ShowPauseMenu()
     {
         pauseMenu.SetActive(true);

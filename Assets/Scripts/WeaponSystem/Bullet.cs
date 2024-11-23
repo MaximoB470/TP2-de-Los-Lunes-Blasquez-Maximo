@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 20f;
+    public float speed = 20f;
     public Rigidbody2D rb;
     public int damageAmount = 1;
     private PlayerController playerController;
+    private BulletFactory bulletFactory; 
+
+    public void Initialize(BulletFactory factory)
+    {
+        bulletFactory = factory; 
+    }
 
     private void Start()
     {
@@ -23,10 +29,13 @@ public class Bullet : MonoBehaviour
             if (enemyHealth != null)
             {
                 enemyHealth.getDamage(damageAmount);
-                Destroy(gameObject);
-              
                 playerController.points += 10;
             }
+            bulletFactory.ReturnBulletToPool(rb);
+        }
+        else if (collision.CompareTag("Walls"))
+        {
+            bulletFactory.ReturnBulletToPool(rb);
         }
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - bench
   - objects
   - GameManager
+  - Walls
   layers:
   - Default
   - TransparentFX
