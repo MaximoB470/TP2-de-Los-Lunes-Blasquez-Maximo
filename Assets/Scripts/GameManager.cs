@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject UI;
 
     public bool isActive = false;
+    public bool ForceWave;
 
     private void Start()
     {
@@ -46,6 +47,11 @@ public class GameManager : MonoBehaviour
             currentState.Execute();
         }
 
+        if(ForceWave == true) 
+        {
+            StartCoroutine(WaitBeforeNextWave());
+            enemiesRemaining = 0;
+        }
 
 
     }
@@ -60,6 +66,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(SpawnEnemies());
 
+        ForceWave = false;
         isActive = false;
     }
 
@@ -86,7 +93,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitBeforeNextWave()
+    public IEnumerator WaitBeforeNextWave()
     {
         Debug.Log("Rest Time " + waveRestTime);
         Debug.Log("BenchActive");
@@ -94,7 +101,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(waveRestTime);
         currentWave++;
         StartWave();
-
+        
     }
 
     public void ChangeState(GameState newState)

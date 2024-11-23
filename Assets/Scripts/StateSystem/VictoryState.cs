@@ -14,7 +14,7 @@ using UnityEngine;
         }
         public override void Execute()
         {
-            //Meter Logica
+            Debug.Log("Not Used");
         }
 
         public override void Exit()

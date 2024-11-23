@@ -122,33 +122,21 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator Dash()
     {
+        if (isDashing || !canDash)
+        {
+            yield break; 
+        }
         canDash = false; 
-        isDashing = true;
-
-        
-        Vector2 dashDirection = movimiento.normalized;
-
-       
+        isDashing = true; 
         Vector2 originalVelocity = rb.velocity;
-
-        
+        Vector2 dashDirection = movimiento.normalized;
         rb.velocity = dashDirection * dashPower;
-
-        
         tr.emitting = true;
-
-        
         yield return new WaitForSeconds(dashingTime);
-
-        
         rb.velocity = originalVelocity;
         tr.emitting = false;
-
-        isDashing = false; 
-
-       
+        isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
-
         canDash = true; 
     }
 
