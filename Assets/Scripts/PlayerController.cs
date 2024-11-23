@@ -33,8 +33,9 @@ public class PlayerController : MonoBehaviour
     private float dashPower = 24f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
-    public int HPTracker;
+    [SerializeField] private int HPTracker;
     [SerializeField] private TrailRenderer tr;
+     private GameManager gameManager;
 
     private void Start()
     {
@@ -47,14 +48,17 @@ public class PlayerController : MonoBehaviour
         healthHandler.Awake();
         HPTracker = healthHandler.maxHp;
 
+        if (gameManager == null)
+        {
+            gameManager = FindObjectOfType<GameManager>();
+        }
+
     }
     private void Update()
     {
-        //Definicion de Inputs
         movimiento.x = Input.GetAxisRaw("Horizontal");
         movimiento.y = Input.GetAxisRaw("Vertical");
 
-        //llamado de camara a la posicion de mouse
         posMouse = cam.ScreenToWorldPoint(Input.mousePosition);
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -67,13 +71,16 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(Dash());
         }
 
+        if(healthHandler.Life <= 0) 
+        {
+            gameManager.ChangeState(new DefeatState(gameManager));
+        }
+
     }
     private void FixedUpdate()
     {
-        //movimiento
         rb.MovePosition(rb.position + movimiento * speed * Time.fixedDeltaTime);
 
-        //movimiento de la camara con el mouse
         Vector2 Dir = posMouse - rb.position;
         float angulo = Mathf.Atan2(Dir.y, Dir.x) * Mathf.Rad2Deg - 90f;
         rb.rotation = angulo;
@@ -144,5 +151,6 @@ public class PlayerController : MonoBehaviour
         ApplyDash = true;
         Debug.Log("Dash unlocked!");
     }
+
 
 }
