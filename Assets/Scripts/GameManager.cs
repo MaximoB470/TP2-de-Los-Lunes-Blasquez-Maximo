@@ -5,21 +5,25 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private List<EnemySpawn> spawners; 
-    private int currentWave = 1; 
+    public int currentWave = 1; 
     private int enemiesToSpawn; 
-    private int enemiesRemaining; 
-    public float waveRestTime = 60f; 
+    public int enemiesRemaining; 
+    public int waveRestTime = 30; 
     public GameObject Bench;
     public GameObject CommandList;
 
     private GameState currentState;
-
+    
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject victoryMenu;
     [SerializeField] private GameObject defeatMenu;
+    [SerializeField] private GameObject UI;
+
+    public bool isActive = false;
 
     private void Start()
     {
+        Bench.SetActive(false);
         if (spawners == null || spawners.Count == 0)
         {
             return;
@@ -41,6 +45,9 @@ public class GameManager : MonoBehaviour
         {
             currentState.Execute();
         }
+
+
+
     }
 
     private void StartWave()
@@ -52,6 +59,8 @@ public class GameManager : MonoBehaviour
         Bench.SetActive(false);
 
         StartCoroutine(SpawnEnemies());
+
+        isActive = false;
     }
 
     private IEnumerator SpawnEnemies()
@@ -73,17 +82,19 @@ public class GameManager : MonoBehaviour
             Bench.SetActive(true);
             Debug.Log("Oleada " + currentWave + " completada.");
             StartCoroutine(WaitBeforeNextWave());
+            isActive = true;
         }
     }
 
     private IEnumerator WaitBeforeNextWave()
     {
-        Debug.Log("Tiempo de descanso antes de la siguiente oleada: " + waveRestTime + " segundos.");
+        Debug.Log("Rest Time " + waveRestTime);
+        Debug.Log("BenchActive");
+        Bench.SetActive(true);
         yield return new WaitForSeconds(waveRestTime);
         currentWave++;
-        Bench.SetActive(true);
-        Debug.Log("Banco activado.");
         StartWave();
+
     }
 
     public void ChangeState(GameState newState)
@@ -103,6 +114,7 @@ public class GameManager : MonoBehaviour
     public void ShowPauseMenu()
     {
         pauseMenu.SetActive(true);
+       
     }
     public void ShowVictoryMenu()
     {
@@ -118,4 +130,6 @@ public class GameManager : MonoBehaviour
         victoryMenu.SetActive(false);
         defeatMenu.SetActive(false);
     }
+    
+   
 }

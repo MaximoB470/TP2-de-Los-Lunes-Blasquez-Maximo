@@ -15,6 +15,4 @@ MonoBehaviour:
   damage: 1
   shootRate: 0.5
   shootTime: 23.935432
-  projectileCount: 1
-  spreadAngle: 1
-  bulletPrefab: {fileID: 3847081431577756503, guid: 8113e27f25fd32c4f9676139fe0eb10a, type: 3}
+  bulletPrefab: {fileID: 8426458922942872, guid: 8113e27f25fd32c4f9676139fe0eb10a, type: 3}

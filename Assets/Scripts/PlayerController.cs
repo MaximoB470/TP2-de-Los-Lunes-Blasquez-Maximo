@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     private float dashPower = 24f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
-    [SerializeField] private int HPTracker;
+    public int HPTracker;
     [SerializeField] private TrailRenderer tr;
      private GameManager gameManager;
 
@@ -46,8 +46,8 @@ public class PlayerController : MonoBehaviour
         healthHandler = gameObject.AddComponent<HealthHandler>();
         healthHandler.maxHp = 5; 
         healthHandler.Awake();
-        HPTracker = healthHandler.maxHp;
 
+        HPTracker = healthHandler.Life;
         if (gameManager == null)
         {
             gameManager = FindObjectOfType<GameManager>();
@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        HPTracker = healthHandler.Life;
         movimiento.x = Input.GetAxisRaw("Horizontal");
         movimiento.y = Input.GetAxisRaw("Vertical");
 
@@ -73,7 +74,12 @@ public class PlayerController : MonoBehaviour
 
         if(healthHandler.Life <= 0) 
         {
-            gameManager.ChangeState(new DefeatState(gameManager));
+            HandleDeath();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            HandlePause();
         }
 
     }
@@ -152,5 +158,14 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Dash unlocked!");
     }
 
+    private void HandlePause() 
+    {
+        gameManager.ChangeState(new PausedState(gameManager));
+    }
+
+    private void HandleDeath()
+    {
+        gameManager.ChangeState(new DefeatState(gameManager));
+    }
 
 }

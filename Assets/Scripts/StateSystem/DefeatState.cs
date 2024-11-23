@@ -13,7 +13,7 @@ public class DefeatState : GameState
     }
     public override void Execute()
     {
-        // A meter Logica
+        Debug.Log("Not Used");
     }
     public override void Exit()
     {
