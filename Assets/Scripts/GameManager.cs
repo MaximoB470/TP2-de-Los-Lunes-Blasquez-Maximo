@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        var audioService = new AudioService();
+        ServiceLocator.RegisterAudioService(audioService);
+        audioService.BackgroundMusic();
+
         Bench.SetActive(false);
         if (spawners == null || spawners.Count == 0)
         {
@@ -52,15 +56,12 @@ public class GameManager : MonoBehaviour
     }
     private void StartWave()
     {
-        Debug.Log("Iniciando oleada " + currentWave);
-
         enemiesToSpawn = 5 * currentWave;
         enemiesRemaining = enemiesToSpawn;
         Bench.SetActive(false);
 
         StartCoroutine(SpawnEnemies());
 
-        
         isActive = false;
     }
 
@@ -80,7 +81,6 @@ public class GameManager : MonoBehaviour
         if (enemiesRemaining <= 0)
         {
             Bench.SetActive(true);
-            Debug.Log("Oleada " + currentWave + " completada.");
             StartCoroutine(WaitBeforeNextWave());
             isActive = true;
         }
@@ -127,6 +127,4 @@ public class GameManager : MonoBehaviour
         victoryMenu.SetActive(false);
         defeatMenu.SetActive(false);
     }
-    
-   
 }

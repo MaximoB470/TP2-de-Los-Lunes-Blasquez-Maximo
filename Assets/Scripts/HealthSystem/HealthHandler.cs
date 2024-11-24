@@ -28,7 +28,6 @@ public class HealthHandler: MonoBehaviour, IHealth
         }
     }
 }
-
 public class InvulnerableHandler
 {
     //We want to change it's health variable to add logic to it

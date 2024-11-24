@@ -52,6 +52,9 @@ public class Enemy : MonoBehaviour
             {
                 GameManager.EnemyDefeated();
                 playerHealth.getDamage(damageAmount);
+                var audioService = ServiceLocator.GetAudioService();
+                audioService.HitSound();
+
             }
             Destroy(gameObject);
         }

@@ -9,7 +9,9 @@ public class DefeatState : GameState
     {
         Debug.Log("Entering Defeat State");
         Time.timeScale = 0f; 
-        gameManager.ShowDefeatMenu(); 
+        gameManager.ShowDefeatMenu();
+        var audioService = ServiceLocator.GetAudioService();
+        audioService.StopBackgroundMusic();
     }
     public override void Execute()
     {

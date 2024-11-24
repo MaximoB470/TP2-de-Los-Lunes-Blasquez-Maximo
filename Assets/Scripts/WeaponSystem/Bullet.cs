@@ -28,6 +28,8 @@ public class Bullet : MonoBehaviour
             var enemyHealth = collision.GetComponent<HealthHandler>();
             if (enemyHealth != null)
             {
+                var audioService = ServiceLocator.GetAudioService();
+                audioService.HitSound();
                 enemyHealth.getDamage(damageAmount);
                 playerController.points += 10;
             }

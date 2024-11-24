@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject healthTextObject;
     [SerializeField] private GameObject pointsTextObject;
     [SerializeField] private GameObject roundTextObject;
+    [SerializeField] private GameObject roundTextObject2;
     [SerializeField] private GameObject waitTextObject;
 
     private TextMeshProUGUI healthText;
@@ -50,7 +51,6 @@ public class UIManager : MonoBehaviour
         UpdateHealth(playerController.HPTracker);
         UpdatePoints(playerController.points);
         UpdateRound(gameManager.currentWave);
-        UpdateWait(gameManager.waveRestTime);
     }
 
     private void Update()
@@ -58,27 +58,26 @@ public class UIManager : MonoBehaviour
         UpdateHealth(playerController.HPTracker);
         UpdatePoints(playerController.points);
         UpdateRound(gameManager.currentWave);
-        UpdateWait(gameManager.waveRestTime);
 
-        if (gameManager.isActive == true) 
-        { 
+
+        if (gameManager.isActive == true)
+        {
             waitTextObject.SetActive(true);
             roundTextObject.SetActive(false);
+            roundTextObject2.SetActive(false);
         }
         else
         {
             waitTextObject.SetActive(false);
             roundTextObject.SetActive(true);
+            roundTextObject2.SetActive(true);
             ShopMenu.SetActive(false);
         }
-
     }
-
     public void ExitShop()
     {
         ShopMenu.SetActive(false);
     }
-
     public void UpdateHealth(int health)
     {
         if (healthText != null)
@@ -98,13 +97,6 @@ public class UIManager : MonoBehaviour
         if (roundText != null)
         {
             roundText.text = $"{round}";
-        }
-    }
-    public void UpdateWait(float waitTime)
-    {
-        if (waitText != null)
-        {
-            waitText.text = $"{waitTime:F1}"; 
         }
     }
 }

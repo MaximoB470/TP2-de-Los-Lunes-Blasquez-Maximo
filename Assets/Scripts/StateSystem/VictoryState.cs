@@ -11,6 +11,8 @@ using UnityEngine;
             Debug.Log("Entering Victory State");
             Time.timeScale = 0f;
             gameManager.ShowVictoryMenu();
+            var audioService = ServiceLocator.GetAudioService();
+            audioService.StopBackgroundMusic();
         }
         public override void Execute()
         {

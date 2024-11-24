@@ -239,7 +239,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Time until next round...
+  m_text: Prepare For The Next Round...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -611,7 +611,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.47861212, y: 0.727327}
   m_AnchorMax: {x: 0.546, y: 0.823}
-  m_AnchoredPosition: {x: 27.194649, y: -80.38718}
+  m_AnchoredPosition: {x: 290, y: -8.7}
   m_SizeDelta: {x: 186.40326, y: 45.379074}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8380144574086234958
