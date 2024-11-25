@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
             enemiesRemaining = 0;
         }
     }
-    private void StartWave()
+    public void StartWave()
     {
         enemiesToSpawn = 5 * currentWave;
         enemiesRemaining = enemiesToSpawn;

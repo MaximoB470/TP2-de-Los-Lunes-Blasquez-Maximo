@@ -5,9 +5,10 @@ using UnityEngine;
 public class ShopManager : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private int dashCost = 300;                 
-    [SerializeField] private int medkitCost = 150;               
-    [SerializeField] private int escapeCost = 2000;              
+    [SerializeField] private int dashCost = 300;                               
+    [SerializeField] private int escapeCost = 2000;
+    [SerializeField] private int MEedkitCost = 300;
+    public GameObject MK;
 
     public void BuyDash()
     {
@@ -17,19 +18,16 @@ public class ShopManager : MonoBehaviour
             playerController.UnlockDash();
         }
     }
-    public void BuyMedkit()
+
+    public void BuyMedKit()
     {
-        //if (playerController.points >= medkitCost)
-        //{
-        //    playerController.points -= medkitCost;
-        //    playerController.Heal(1); // Asume que este método cura al jugador (por ejemplo, +1 vida).
-        //    Debug.Log("Botiquín comprado");
-        //}
-        //else
-        //{
-        //    Debug.Log("No tienes suficientes puntos para el Botiquín.");
-        //}
+        if (playerController.points >= MEedkitCost)
+        {
+            playerController.points -= MEedkitCost;
+            MK.SetActive(true);
+        }
     }
+
     public void BuyEscape()
     {
         if (playerController.points >= escapeCost)

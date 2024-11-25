@@ -27,6 +27,13 @@ public class HealthHandler: MonoBehaviour, IHealth
             Debug.Log("Dead");
         }
     }
+
+    public void Heal(int HA) 
+    {
+        var audioService = ServiceLocator.GetAudioService();
+        audioService.HealSound();
+        Health.Life += HA;
+    }
 }
 public class InvulnerableHandler
 {

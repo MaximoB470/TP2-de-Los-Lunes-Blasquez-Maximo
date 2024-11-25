@@ -10,11 +10,14 @@ public class AudioService : IAudioService
     private AudioClip shootSFX;
     private AudioClip bgSFX;
     private AudioClip hitSFX;
+    private AudioClip healSFX;
+
     public AudioService()
     {
         shootSFX = Resources.Load<AudioClip>("Sounds/ShootSFX");
         bgSFX = Resources.Load<AudioClip>("Sounds/KrakenSFX");
         hitSFX = Resources.Load<AudioClip>("Sounds/HitSFX");
+        healSFX = Resources.Load<AudioClip>("Sounds/HealSFX");
 
         var audioObject = new GameObject("AudioService");
         soundEffectSource = audioObject.AddComponent<AudioSource>();
@@ -30,6 +33,12 @@ public class AudioService : IAudioService
     {
         soundEffectSource.PlayOneShot(hitSFX); 
     }
+
+    public void HealSound() 
+    {
+        soundEffectSource.PlayOneShot(healSFX);
+    }
+
     public void BackgroundMusic()
     {
         musicSource.clip = bgSFX;

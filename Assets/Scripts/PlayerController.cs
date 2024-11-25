@@ -130,16 +130,25 @@ public class PlayerController : MonoBehaviour
         isDashing = true; 
         Vector2 originalVelocity = rb.velocity;
         Vector2 dashDirection = movimiento.normalized;
+        if (dashDirection == Vector2.zero)
+        {
+            dashDirection = (posMouse - rb.position).normalized;
+        }
         rb.velocity = dashDirection * dashPower;
-        tr.emitting = true;
+        if (tr != null)
+        {
+            tr.emitting = true;
+        }
         yield return new WaitForSeconds(dashingTime);
         rb.velocity = originalVelocity;
-        tr.emitting = false;
+        if (tr != null)
+        {
+            tr.emitting = false;
+        }
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true; 
     }
-
     public void UnlockDash()
     {
         ApplyDash = true;
