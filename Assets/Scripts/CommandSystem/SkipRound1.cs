@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Commands/ForceSkipRound")]
-
-
 public class ForceSkipRound : Command
 {
     private GameManager manager;

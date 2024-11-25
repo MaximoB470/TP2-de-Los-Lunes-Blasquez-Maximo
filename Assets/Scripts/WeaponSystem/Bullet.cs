@@ -9,18 +9,15 @@ public class Bullet : MonoBehaviour
     public int damageAmount = 1;
     private PlayerController playerController;
     private BulletFactory bulletFactory; 
-
     public void Initialize(BulletFactory factory)
     {
         bulletFactory = factory; 
     }
-
     private void Start()
     {
         rb.velocity = transform.up * speed;
         playerController = FindObjectOfType<PlayerController>();
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("enemies"))

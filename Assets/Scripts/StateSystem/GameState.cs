@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class GameState
 {
     protected GameManager gameManager;
-
     public GameState(GameManager manager)
     {
         gameManager = manager;

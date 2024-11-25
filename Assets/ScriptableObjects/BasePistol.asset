@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 2
   shootRate: 1
-  shootTime: 1
+  shootTime: 4
   bulletPrefab: {fileID: 8426458922942872, guid: 8113e27f25fd32c4f9676139fe0eb10a, type: 3}

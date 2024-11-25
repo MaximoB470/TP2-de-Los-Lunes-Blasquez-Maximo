@@ -6,9 +6,7 @@ public class BulletFactory : MonoBehaviour
 {
     public WeaponScriptable weaponData;
     public int poolSize = 1;  
-
     private Queue<Rigidbody2D> bulletPool = new Queue<Rigidbody2D>();
-
     void Start()
     {
         InitializeBulletPool();

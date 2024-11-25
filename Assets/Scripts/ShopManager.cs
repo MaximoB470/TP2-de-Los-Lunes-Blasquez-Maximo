@@ -18,7 +18,6 @@ public class ShopManager : MonoBehaviour
             playerController.UnlockDash();
         }
     }
-
     public void BuyMedKit()
     {
         if (playerController.points >= MEedkitCost)
@@ -27,13 +26,11 @@ public class ShopManager : MonoBehaviour
             MK.SetActive(true);
         }
     }
-
     public void BuyEscape()
     {
         if (playerController.points >= escapeCost)
         {
             playerController.points -= escapeCost;
-            Debug.Log("Victory State Working Correctly");
             var gameManager = FindObjectOfType<GameManager>();
             if (gameManager != null)
             {

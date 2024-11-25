@@ -21,7 +21,6 @@ public class Enemy : MonoBehaviour
         healthHandler.Awake();
         GameManager = FindObjectOfType<GameManager>();
     }
-
     private void Update()
     {
         MoveTowardsPlayer();

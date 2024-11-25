@@ -5,16 +5,21 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    private int WaitAmount = 3;
+    public bool grasssActive = false;
+
     [SerializeField] private GameObject healthTextObject;
     [SerializeField] private GameObject pointsTextObject;
     [SerializeField] private GameObject roundTextObject;
     [SerializeField] private GameObject roundTextObject2;
     [SerializeField] private GameObject waitTextObject;
+    [SerializeField] private GameObject warningTextObject;
 
     private TextMeshProUGUI healthText;
     private TextMeshProUGUI pointsText;
     private TextMeshProUGUI roundText;
     private TextMeshProUGUI waitText;
+    private TextMeshProUGUI warningText;
 
     private PlayerController playerController;
     private GameManager gameManager;
@@ -48,6 +53,10 @@ public class UIManager : MonoBehaviour
         {
             waitText = waitTextObject.GetComponent<TextMeshProUGUI>();
         }
+        if (warningTextObject != null)
+        {
+            warningText = warningTextObject.GetComponent<TextMeshProUGUI>();
+        }
         UpdateHealth(playerController.HPTracker);
         UpdatePoints(playerController.points);
         UpdateRound(gameManager.currentWave);
@@ -72,6 +81,15 @@ public class UIManager : MonoBehaviour
             roundTextObject.SetActive(true);
             roundTextObject2.SetActive(true);
             ShopMenu.SetActive(false);
+        }
+
+        if(grasssActive == true)
+        {
+            if (grasssActive)
+            {
+                grasssActive = false; 
+                StartCoroutine(Deactivate());
+            }
         }
     }
     public void ExitShop()
@@ -99,4 +117,15 @@ public class UIManager : MonoBehaviour
             roundText.text = $"{round}";
         }
     }
+
+    private IEnumerator Deactivate() 
+    {
+        if (warningTextObject != null)
+        {
+            warningTextObject.SetActive(true); 
+            yield return new WaitForSeconds(WaitAmount); 
+            warningTextObject.SetActive(false); 
+        }
+    }
+
 }

@@ -81,7 +81,6 @@ public class PlayerController : MonoBehaviour
         {
             HandlePause();
         }
-
     }
     private void FixedUpdate()
     {
@@ -152,9 +151,8 @@ public class PlayerController : MonoBehaviour
     public void UnlockDash()
     {
         ApplyDash = true;
-        Debug.Log("Dash unlocked!");
+        Debug.Log("Dash unlocked");
     }
-
     private void HandlePause() 
     {
         gameManager.ChangeState(new PausedState(gameManager));

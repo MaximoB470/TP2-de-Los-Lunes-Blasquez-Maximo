@@ -10,6 +10,7 @@ TagManager:
   - objects
   - GameManager
   - Walls
+  - HellGrass
   layers:
   - Default
   - TransparentFX

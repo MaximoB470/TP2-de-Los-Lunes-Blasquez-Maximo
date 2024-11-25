@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviour
     public IEnumerator WaitBeforeNextWave()
     {
         Debug.Log("Rest Time " + waveRestTime);
-        Debug.Log("BenchActive");
         Bench.SetActive(true);
         yield return new WaitForSeconds(waveRestTime);
         currentWave++;
