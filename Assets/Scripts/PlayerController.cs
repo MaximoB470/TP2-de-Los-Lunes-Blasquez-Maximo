@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        state = new StateMachine();
         var managerService = ServiceLocator.GetService<ManagerService>();
         var gameManager = ServiceLocator.GetService<GameManager>();
         sp = GetComponent<SpriteRenderer>();

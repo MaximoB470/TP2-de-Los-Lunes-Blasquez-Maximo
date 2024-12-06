@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
                 var audioService = new AudioService();
                 ServiceLocator.Register<IAudioService>(audioService);
                 audioService.HitSound();
-                enemyHealth.getDamage(damageAmount);
+                enemyHealth.GetDamage(damageAmount);
                 playerController.points += 10;
             }
             bulletFactory.ReturnBulletToPool(rb);

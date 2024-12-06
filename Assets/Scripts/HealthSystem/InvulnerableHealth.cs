@@ -16,7 +16,7 @@ public class InvulnerableHealth : IHealth
     {
         original.Awake();
     }
-    public void getDamage(int value)
+    public void GetDamage(int value)
     {
         Debug.Log($"Skipped damage since I'm invulnerable.");
     }

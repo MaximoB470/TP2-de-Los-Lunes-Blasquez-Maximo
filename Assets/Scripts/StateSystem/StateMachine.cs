@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachine : MonoBehaviour
+public class StateMachine 
 {
     public GameState currentState;
 
-    public void Start()
+    public void Update()
     {
         if (currentState != null)
         {

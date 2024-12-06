@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
             if (playerHealth != null)
             {
                 GameManager.EnemyDefeated();
-                playerHealth.getDamage(damageAmount);
+                playerHealth.GetDamage(damageAmount);
                 var audioService = new AudioService();
                 ServiceLocator.Register<IAudioService>(audioService);
                 audioService.HitSound();

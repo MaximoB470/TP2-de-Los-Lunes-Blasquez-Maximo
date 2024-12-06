@@ -31,6 +31,7 @@ public class ShopManager : MonoBehaviour
     {
         if (playerController.points >= escapeCost)
         {
+            state = new StateMachine();
             playerController.points -= escapeCost;
             var gameManager = FindObjectOfType<GameManager>();
             state.ChangeState(new VictoryState(state));

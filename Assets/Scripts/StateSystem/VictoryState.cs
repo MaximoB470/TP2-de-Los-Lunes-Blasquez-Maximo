@@ -10,7 +10,8 @@ using UnityEngine;
 
         public override void Enter()
         {
-             var managerService = ServiceLocator.GetService<ManagerService>();
+            state = new StateMachine();
+            var managerService = ServiceLocator.GetService<ManagerService>();
             var uiManager = managerService.GetManager<UIManager>();
             Debug.Log("Entering Victory State");
             Time.timeScale = 0f;

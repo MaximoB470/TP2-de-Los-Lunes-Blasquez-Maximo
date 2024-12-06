@@ -23,11 +23,11 @@ public class GameManager : MonoBehaviour
         ServiceLocator.Register<IAudioService>(audioService);
         audioService.BackgroundMusic();
         Bench.SetActive(false);
-
         if (spawners == null || spawners.Count == 0)
         {
             return;
         }
+        state = new StateMachine();
         state.ChangeState(new PlayingState(state));
         StartWave();
     }
@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(WaitBeforeNextWave());
             enemiesRemaining = 0;
         }
+        state.Update();
     }
     public void StartWave()
     {

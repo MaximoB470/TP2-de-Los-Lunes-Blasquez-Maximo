@@ -11,7 +11,7 @@ public class Health : IHealth
     { 
         Life = maxHp;
     }
-    public void getDamage(int value) 
+    public void GetDamage(int value) 
     {
         Life -= value;
     }

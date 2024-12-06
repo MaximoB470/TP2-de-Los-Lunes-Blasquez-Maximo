@@ -21,6 +21,6 @@ public static class ServiceLocator
         {
             return (T)result;
         }
-        throw new Exception("Service is not registered");
+        return default;
     }
 }

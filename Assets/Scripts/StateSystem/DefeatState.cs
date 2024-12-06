@@ -9,6 +9,7 @@ public class DefeatState : GameState
     private StateMachine state;
     public override void Enter()
     {
+        state = new StateMachine();
         Debug.Log("Entering Defeat State");
         Time.timeScale = 0f; 
         UI.ShowDefeatMenu();

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using static UnityEngine.UI.Image;
 
 public class HealthHandler: MonoBehaviour, IHealth
@@ -12,15 +13,18 @@ public class HealthHandler: MonoBehaviour, IHealth
      
     public int maxHp;
 
+    public event Action<int> OnHealthChange;
+
     public void Awake()
     {
         Health = new Health();
         Life = maxHp;
     }
  
-    public void getDamage(int value) 
+    public void GetDamage(int value) 
     {
-        Health.getDamage(value);
+        Health.GetDamage(value);
+        //OnHealthChange.Invoke(Life);   
 
         if (Health.Life <= 0) 
         {
@@ -30,6 +34,7 @@ public class HealthHandler: MonoBehaviour, IHealth
 
     public void Heal(int HA) 
     {
+        //OnHealthChange.Invoke(Life);
         var audioService = new AudioService();
         ServiceLocator.Register<IAudioService>(audioService);
         audioService.HealSound();

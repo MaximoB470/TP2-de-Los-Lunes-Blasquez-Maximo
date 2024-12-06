@@ -5,6 +5,6 @@ using UnityEngine;
 public interface IHealth 
 {
     int Life { get; set; }
-    void getDamage(int value);
+    void GetDamage(int value);
     void Awake();
 }

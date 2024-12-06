@@ -20,7 +20,7 @@ public class HellGrass : MonoBehaviour
         HealthHandler healthHandler = player.GetComponent<HealthHandler>();
         if (healthHandler != null)
         {
-            healthHandler.getDamage(damageAmount);
+            healthHandler.GetDamage(damageAmount);
         }
     }
 }

@@ -12,6 +12,7 @@ public class ManagerService : MonoBehaviour, IManager
     }
     public T GetManager<T>() where T : class
     {
+        RegisterManagers();
         return ServiceLocator.GetService<T>();
     }
 }
