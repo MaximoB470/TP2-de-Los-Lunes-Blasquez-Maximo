@@ -15,6 +15,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject waitTextObject;
     [SerializeField] private GameObject warningTextObject;
 
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject victoryMenu;
+    [SerializeField] private GameObject defeatMenu;
+
     private TextMeshProUGUI healthText;
     private TextMeshProUGUI pointsText;
     private TextMeshProUGUI roundText;
@@ -128,4 +132,23 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ShowPauseMenu()
+    {
+        pauseMenu.SetActive(true);
+
+    }
+    public void ShowVictoryMenu()
+    {
+        victoryMenu.SetActive(true);
+    }
+    public void ShowDefeatMenu()
+    {
+        defeatMenu.SetActive(true);
+    }
+    public void HideAllMenus()
+    {
+        pauseMenu.SetActive(false);
+        victoryMenu.SetActive(false);
+        defeatMenu.SetActive(false);
+    }
 }

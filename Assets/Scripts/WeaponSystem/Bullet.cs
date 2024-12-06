@@ -17,6 +17,9 @@ public class Bullet : MonoBehaviour
     {
         rb.velocity = transform.up * speed;
         playerController = FindObjectOfType<PlayerController>();
+
+        var audioService = new AudioService();
+        ServiceLocator.Register<IAudioService>(audioService);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -25,7 +28,8 @@ public class Bullet : MonoBehaviour
             var enemyHealth = collision.GetComponent<HealthHandler>();
             if (enemyHealth != null)
             {
-                var audioService = ServiceLocator.GetAudioService();
+                var audioService = new AudioService();
+                ServiceLocator.Register<IAudioService>(audioService);
                 audioService.HitSound();
                 enemyHealth.getDamage(damageAmount);
                 playerController.points += 10;

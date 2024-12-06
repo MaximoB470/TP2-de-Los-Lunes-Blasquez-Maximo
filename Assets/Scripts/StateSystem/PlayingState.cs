@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class PlayingState : GameState
 {
-    public PlayingState(GameManager manager) : base(manager) { } 
+    public PlayingState(StateMachine manager) : base(manager) { }
+
+    private UIManager uiManager; 
+    private StateMachine state;  
     public override void Enter()
     {
         Debug.Log("Entering Playing State");
+
+        if (uiManager == null)
+        {
+            uiManager = Object.FindObjectOfType<UIManager>();
+        }
         Time.timeScale = 1f;
-        gameManager.HideAllMenus();
+        uiManager.HideAllMenus(); 
     }
     public override void Execute()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            gameManager.ChangeState(new PausedState(gameManager));
+            state.ChangeState(new PausedState(state)); 
         }
     }
     public override void Exit()

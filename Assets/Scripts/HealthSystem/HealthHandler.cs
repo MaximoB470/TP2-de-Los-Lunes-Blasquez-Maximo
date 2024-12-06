@@ -30,7 +30,8 @@ public class HealthHandler: MonoBehaviour, IHealth
 
     public void Heal(int HA) 
     {
-        var audioService = ServiceLocator.GetAudioService();
+        var audioService = new AudioService();
+        ServiceLocator.Register<IAudioService>(audioService);
         audioService.HealSound();
         Health.Life += HA;
     }

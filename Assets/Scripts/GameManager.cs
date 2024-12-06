@@ -12,27 +12,23 @@ public class GameManager : MonoBehaviour
     public GameObject Bench;
     public GameObject CommandList;
 
-    private GameState currentState;
+    private StateMachine state;
     
-    [SerializeField] private GameObject pauseMenu;
-    [SerializeField] private GameObject victoryMenu;
-    [SerializeField] private GameObject defeatMenu;
-
     public bool isActive = false;
     public bool ForceWave;
 
     private void Start()
     {
         var audioService = new AudioService();
-        ServiceLocator.RegisterAudioService(audioService);
+        ServiceLocator.Register<IAudioService>(audioService);
         audioService.BackgroundMusic();
-
         Bench.SetActive(false);
+
         if (spawners == null || spawners.Count == 0)
         {
             return;
         }
-        ChangeState(new PlayingState(this));
+        state.ChangeState(new PlayingState(state));
         StartWave();
     }
     private void Update()
@@ -43,10 +39,6 @@ public class GameManager : MonoBehaviour
             {
                 CommandList.SetActive(!CommandList.activeSelf);
             }
-        }
-        if (currentState != null)
-        {
-            currentState.Execute();
         }
         if(ForceWave == true) 
         {
@@ -93,37 +85,5 @@ public class GameManager : MonoBehaviour
         currentWave++;
         StartWave();
         ForceWave = false;
-    }
-    public void ChangeState(GameState newState)
-    {
-        if (currentState != null)
-        {
-            currentState.Exit();
-        }
-        currentState = newState;
-
-        if (currentState != null)
-        {
-            currentState.Enter();
-        }
-    }
-    public void ShowPauseMenu()
-    {
-        pauseMenu.SetActive(true);
-       
-    }
-    public void ShowVictoryMenu()
-    {
-        victoryMenu.SetActive(true);
-    }
-    public void ShowDefeatMenu()
-    {
-        defeatMenu.SetActive(true);
-    }
-    public void HideAllMenus()
-    {
-        pauseMenu.SetActive(false);
-        victoryMenu.SetActive(false);
-        defeatMenu.SetActive(false);
     }
 }

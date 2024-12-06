@@ -6,7 +6,6 @@ using UnityEngine;
 public class ForceSkipRound : Command
 {
     private GameManager manager;
-
     public override void execute()
     {
         if (manager == null)

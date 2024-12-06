@@ -35,10 +35,13 @@ public class PlayerController : MonoBehaviour
     private float dashingCooldown = 1f;
     public int HPTracker;
     [SerializeField] private TrailRenderer tr;
-     private GameManager gameManager;
+    private StateMachine state;
+
 
     private void Start()
     {
+        var managerService = ServiceLocator.GetService<ManagerService>();
+        var gameManager = ServiceLocator.GetService<GameManager>();
         sp = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
        EquipWeapon(Weapon);
@@ -48,11 +51,7 @@ public class PlayerController : MonoBehaviour
         healthHandler.Awake();
 
         HPTracker = healthHandler.Life;
-        if (gameManager == null)
-        {
-            gameManager = FindObjectOfType<GameManager>();
-        }
-
+        ServiceLocator.Register<PlayerController>(this);
     }
     private void Update()
     {
@@ -90,7 +89,6 @@ public class PlayerController : MonoBehaviour
         float angulo = Mathf.Atan2(Dir.y, Dir.x) * Mathf.Rad2Deg - 90f;
         rb.rotation = angulo;
     }
-
     private void TryInteract()
     {
         Debug.Log("tried inteaction");
@@ -155,12 +153,10 @@ public class PlayerController : MonoBehaviour
     }
     private void HandlePause() 
     {
-        gameManager.ChangeState(new PausedState(gameManager));
+        state.ChangeState(new PausedState(state));
     }
-
     private void HandleDeath()
     {
-        gameManager.ChangeState(new DefeatState(gameManager));
+        state.ChangeState(new DefeatState(state));
     }
-
 }

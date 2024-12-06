@@ -9,7 +9,7 @@ public class MedKitPickUp : MonoBehaviour, Iinteractable
     public GameObject MedKit;
     public void interaction()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("player");
+        var player = ServiceLocator.GetService<PlayerController>();
         HealthHandler wrapper = player.GetComponent<HealthHandler>();
         wrapper.Heal(healAmount);
         MedKit.SetActive(false); 

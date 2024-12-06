@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class PausedState : GameState
 {
-    public PausedState(GameManager manager) : base(manager) { } 
+    public PausedState(StateMachine managment) : base(managment) { }
+    private StateMachine state;
     public override void Enter()
     {
+        var managerService = ServiceLocator.GetService<ManagerService>();
+        var uiManager = managerService.GetManager<UIManager>();
         Debug.Log("Entering Paused State");
         Time.timeScale = 0f; 
-        gameManager.ShowPauseMenu();
+        uiManager.ShowPauseMenu();
     }
     public override void Execute()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            gameManager.ChangeState(new PlayingState(gameManager));
+            state.ChangeState(new PlayingState(state));
         }
     }
     public override void Exit()

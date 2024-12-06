@@ -6,12 +6,10 @@ public class AudioService : IAudioService
 {
     private AudioSource soundEffectSource;
     private AudioSource musicSource;
-
     private AudioClip shootSFX;
     private AudioClip bgSFX;
     private AudioClip hitSFX;
     private AudioClip healSFX;
-
     public AudioService()
     {
         shootSFX = Resources.Load<AudioClip>("Sounds/ShootSFX");

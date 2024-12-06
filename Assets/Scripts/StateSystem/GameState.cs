@@ -4,10 +4,10 @@ using UnityEngine;
 
 public abstract class GameState
 {
-    protected GameManager gameManager;
-    public GameState(GameManager manager)
+    protected StateMachine stateMachine;
+    public GameState(StateMachine State)
     {
-        gameManager = manager;
+        stateMachine = State;
     }
     public abstract void Enter();   
     public abstract void Execute(); 

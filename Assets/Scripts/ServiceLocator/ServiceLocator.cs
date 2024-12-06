@@ -5,17 +5,22 @@ using UnityEngine;
 
 public static class ServiceLocator
 {
-    private static IAudioService audioService;
-    public static void RegisterAudioService(IAudioService service)
+    private static Dictionary<Type, object> services = new Dictionary<Type, object>();
+
+    public static void Register<T>(T service)
     {
-        audioService = service;
+        if (services.ContainsKey(typeof(T)))
+            return;
+
+        services.Add(typeof(T), service);
     }
-    public static IAudioService GetAudioService()
+
+    public static T GetService<T>()
     {
-        if (audioService == null)
+        if (services.TryGetValue(typeof(T), out object result))
         {
-            throw new Exception("Not AudioService");
+            return (T)result;
         }
-        return audioService;
+        throw new Exception("Service is not registered");
     }
 }

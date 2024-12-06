@@ -3,23 +3,26 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float moveSpeed = 3f;          
-    public Transform player;               
+    public float moveSpeed = 3f;                      
     public float detectionRange = 10f;
     public int Life;
+    private Transform player;
     public int damageAmount = 1;
     private HealthHandler healthHandler;
     private GameManager GameManager;
     private void Start()
     {
-        if (player == null)
-        {
-            player = GameObject.FindWithTag("player").transform;
-        }
+
+        var playerController = ServiceLocator.GetService<PlayerController>();
         healthHandler = gameObject.AddComponent<HealthHandler>();
         healthHandler.maxHp = 1;
         healthHandler.Awake();
         GameManager = FindObjectOfType<GameManager>();
+
+        if (playerController != null)
+        {
+            player = playerController.transform;
+        }
     }
     private void Update()
     {
@@ -51,7 +54,8 @@ public class Enemy : MonoBehaviour
             {
                 GameManager.EnemyDefeated();
                 playerHealth.getDamage(damageAmount);
-                var audioService = ServiceLocator.GetAudioService();
+                var audioService = new AudioService();
+                ServiceLocator.Register<IAudioService>(audioService);
                 audioService.HitSound();
 
             }

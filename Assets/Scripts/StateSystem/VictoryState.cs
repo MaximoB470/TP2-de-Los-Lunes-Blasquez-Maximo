@@ -5,13 +5,18 @@ using UnityEngine;
 
     public class VictoryState : GameState
     {
-        public VictoryState(GameManager manager) : base(manager) { }
+        public VictoryState(StateMachine manager) : base(manager) { }
+        private StateMachine state;
+
         public override void Enter()
         {
+             var managerService = ServiceLocator.GetService<ManagerService>();
+            var uiManager = managerService.GetManager<UIManager>();
             Debug.Log("Entering Victory State");
             Time.timeScale = 0f;
-            gameManager.ShowVictoryMenu();
-            var audioService = ServiceLocator.GetAudioService();
+            uiManager.ShowVictoryMenu();
+            var audioService = new AudioService();
+            ServiceLocator.Register<IAudioService>(audioService);
             audioService.StopBackgroundMusic();
         }
         public override void Execute()

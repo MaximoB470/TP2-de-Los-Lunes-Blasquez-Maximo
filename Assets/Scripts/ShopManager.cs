@@ -9,6 +9,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private int escapeCost = 2000;
     [SerializeField] private int MEedkitCost = 300;
     public GameObject MK;
+    private StateMachine state;
 
     public void BuyDash()
     {
@@ -32,11 +33,9 @@ public class ShopManager : MonoBehaviour
         {
             playerController.points -= escapeCost;
             var gameManager = FindObjectOfType<GameManager>();
-            if (gameManager != null)
-            {
-                gameManager.ChangeState(new VictoryState(gameManager));
-                gameManager.isActive = false;
-            }
+            state.ChangeState(new VictoryState(state));
+            gameManager.isActive = false;
+            
         }
     }
 }
