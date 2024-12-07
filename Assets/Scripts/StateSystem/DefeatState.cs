@@ -8,15 +8,15 @@ public class DefeatState : GameState
     private StateMachine state;
     public override void Enter()
     {
-        var managerService = ServiceLocator.GetService<ManagerService>();
-        var uiManager = managerService.GetManager<UIManager>();
         state = new StateMachine();
-        Debug.Log("Entering Defeat State");
-        Time.timeScale = 0f; 
-        uiManager.ShowDefeatMenu();
+        var uiManager = ServiceLocator.GetService<IUImanager>();
         var audioService = new AudioService();
         ServiceLocator.Register<IAudioService>(audioService);
+        uiManager.ShowDefeatMenu();
         audioService.StopBackgroundMusic();
+        Time.timeScale = 0f; 
+        
+        Debug.Log("Entering Defeat State");
     }
     public override void Execute()
     {

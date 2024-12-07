@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour
     public float speed = 20f;
     public Rigidbody2D rb;
     public int damageAmount = 1;
-    private PlayerController playerController;
     private BulletFactory bulletFactory; 
     public void Initialize(BulletFactory factory)
     {
@@ -16,10 +15,6 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         rb.velocity = transform.up * speed;
-        playerController = FindObjectOfType<PlayerController>();
-
-        var audioService = new AudioService();
-        ServiceLocator.Register<IAudioService>(audioService);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -28,6 +23,7 @@ public class Bullet : MonoBehaviour
             var enemyHealth = collision.GetComponent<HealthHandler>();
             if (enemyHealth != null)
             {
+                var playerController = ServiceLocator.GetService<PlayerController>();
                 var audioService = new AudioService();
                 ServiceLocator.Register<IAudioService>(audioService);
                 audioService.HitSound();

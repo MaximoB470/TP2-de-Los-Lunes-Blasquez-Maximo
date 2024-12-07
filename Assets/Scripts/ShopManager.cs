@@ -2,7 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopManager : MonoBehaviour
+public interface IShopManager
+{
+    void BuyDash();
+    void BuyMedKit();
+    void BuyEscape();
+}
+public class ShopManager : MonoBehaviour, IShopManager
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private int dashCost = 300;                               
@@ -10,6 +16,11 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private int MEedkitCost = 300;
     public GameObject MK;
     private StateMachine state;
+
+    public void Awake()
+    {
+        ServiceLocator.Register<IShopManager>(this);
+    }
 
     public void BuyDash()
     {
@@ -33,7 +44,7 @@ public class ShopManager : MonoBehaviour
         {
             state = new StateMachine();
             playerController.points -= escapeCost;
-            var gameManager = FindObjectOfType<GameManager>();
+            var gameManager = ServiceLocator.GetService<GameManager>();
             state.ChangeState(new VictoryState(state));
             gameManager.isActive = false;
             

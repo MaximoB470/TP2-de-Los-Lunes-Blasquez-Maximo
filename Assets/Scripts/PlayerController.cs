@@ -40,9 +40,10 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        ServiceLocator.Register<PlayerController>(this);
         state = new StateMachine();
-        var managerService = ServiceLocator.GetService<ManagerService>();
         var gameManager = ServiceLocator.GetService<GameManager>();
+        ServiceLocator.Register<IGameManager>(gameManager);
         sp = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
        EquipWeapon(Weapon);

@@ -10,43 +10,17 @@ public class Enemy : MonoBehaviour
     private Transform player;
     public int damageAmount = 1;
     private HealthHandler healthHandler;
-    private GameManager GameManager;
-    public enum EntityType
-    {
-        Player,
-        Enemy,
-        Npc,
-        Tree,
-        House,
-        Door
-    }
-    public interface IEntitiesService
-    {
-        public T GetEntity<T>(EntityType entityType) where T : MonoBehaviour;
-    }
-    public class EntityService : IEntitiesService
-    {
-        private Dictionary<EntityType, List<MonoBehaviour>> entitiesByType;
-        public T GetEntity<T>(EntityType entityType) where T : MonoBehaviour
-        {
-            MonoBehaviour entityFound = null;
-            //Find the entity
-            return entityFound as T;
-        }
-    }
+  
     private void Start()
     {
-
-        var playerController = ServiceLocator.GetService<IEntitiesService>().GetEntity<PlayerController>(EntityType.Player);
+        var playerController = ServiceLocator.GetService<PlayerController>();
+        if (playerController != null)
+        {
+            player = playerController.transform; 
+        }
         healthHandler = gameObject.AddComponent<HealthHandler>();
         healthHandler.maxHp = 1;
         healthHandler.Awake();
-        GameManager = FindObjectOfType<GameManager>();
-
-        if (playerController != null)
-        {
-            player = playerController.transform;
-        }
     }
     private void Update()
     {
@@ -54,7 +28,8 @@ public class Enemy : MonoBehaviour
 
         if (healthHandler.Life <= 0)
         {
-            GameManager.EnemyDefeated(); 
+            var gameManager = ServiceLocator.GetService<GameManager>();
+            gameManager.EnemyDefeated(); 
             Destroy(gameObject); 
         }
     }
@@ -76,7 +51,7 @@ public class Enemy : MonoBehaviour
             var playerHealth = collision.gameObject.GetComponent<HealthHandler>();
             if (playerHealth != null)
             {
-                GameManager.EnemyDefeated();
+                var gameManager = ServiceLocator.GetService<GameManager>();
                 playerHealth.GetDamage(damageAmount);
                 var audioService = new AudioService();
                 ServiceLocator.Register<IAudioService>(audioService);
@@ -86,7 +61,5 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
 }
 

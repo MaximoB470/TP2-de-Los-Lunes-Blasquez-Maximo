@@ -4,7 +4,9 @@ using UnityEngine;
 
 public interface IGameManager
 {
-
+    void StartWave();
+    void EnemyDefeated();
+    public IEnumerator WaitBeforeNextWave();
 }
 public class GameManager : MonoBehaviour, IGameManager
 {

@@ -10,11 +10,7 @@ public class HealthHandler: MonoBehaviour, IHealth
         get => Health.Life;
         set => Health.Life = value;
     }
-     
     public int maxHp;
-
-    public event Action<int> OnHealthChange;
-
     public void Awake()
     {
         Health = new Health();
@@ -24,17 +20,14 @@ public class HealthHandler: MonoBehaviour, IHealth
     public void GetDamage(int value) 
     {
         Health.GetDamage(value);
-        //OnHealthChange.Invoke(Life);   
 
         if (Health.Life <= 0) 
         {
             Debug.Log("Dead");
         }
     }
-
     public void Heal(int HA) 
     {
-        //OnHealthChange.Invoke(Life);
         var audioService = new AudioService();
         ServiceLocator.Register<IAudioService>(audioService);
         audioService.HealSound();

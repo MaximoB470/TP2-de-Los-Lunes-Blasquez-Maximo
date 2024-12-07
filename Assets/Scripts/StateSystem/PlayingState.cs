@@ -6,23 +6,19 @@ public class PlayingState : GameState
 {
     public PlayingState(StateMachine manager) : base(manager) { }
 
-    private UIManager uiManager; 
     private StateMachine state;  
     public override void Enter()
     {
-        Debug.Log("Entering Playing State");
-
-        if (uiManager == null)
-        {
-            uiManager = Object.FindObjectOfType<UIManager>();
-        }
+        var uiManager = ServiceLocator.GetService<IUImanager>();
+        uiManager.HideAllMenus();
         Time.timeScale = 1f;
-        uiManager.HideAllMenus(); 
+        Debug.Log("Entering Playing State");
     }
     public override void Execute()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+
             state.ChangeState(new PausedState(state)); 
         }
     }
