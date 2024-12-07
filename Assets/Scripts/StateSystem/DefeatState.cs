@@ -5,14 +5,15 @@ using UnityEngine;
 public class DefeatState : GameState
 {
     public DefeatState(StateMachine manager) : base(manager) { }
-    private UIManager UI;
     private StateMachine state;
     public override void Enter()
     {
+        var managerService = ServiceLocator.GetService<ManagerService>();
+        var uiManager = managerService.GetManager<UIManager>();
         state = new StateMachine();
         Debug.Log("Entering Defeat State");
         Time.timeScale = 0f; 
-        UI.ShowDefeatMenu();
+        uiManager.ShowDefeatMenu();
         var audioService = new AudioService();
         ServiceLocator.Register<IAudioService>(audioService);
         audioService.StopBackgroundMusic();

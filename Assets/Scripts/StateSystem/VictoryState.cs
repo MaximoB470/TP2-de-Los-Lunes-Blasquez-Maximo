@@ -12,12 +12,12 @@ using UnityEngine;
         {
             state = new StateMachine();
             var managerService = ServiceLocator.GetService<ManagerService>();
-            var uiManager = managerService.GetManager<UIManager>();
+           
+            var audioService = new AudioService();
+            ServiceLocator.Register<IAudioService>(audioService);
             Debug.Log("Entering Victory State");
             Time.timeScale = 0f;
             uiManager.ShowVictoryMenu();
-            var audioService = new AudioService();
-            ServiceLocator.Register<IAudioService>(audioService);
             audioService.StopBackgroundMusic();
         }
         public override void Execute()

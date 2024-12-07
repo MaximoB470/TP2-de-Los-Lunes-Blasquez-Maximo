@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public interface IGameManager
+{
+
+}
+public class GameManager : MonoBehaviour, IGameManager
 {
     [SerializeField] private List<EnemySpawn> spawners; 
     public int currentWave = 1; 
@@ -21,6 +25,7 @@ public class GameManager : MonoBehaviour
     {
         var audioService = new AudioService();
         ServiceLocator.Register<IAudioService>(audioService);
+        ServiceLocator.Register<IGameManager>(this);
         audioService.BackgroundMusic();
         Bench.SetActive(false);
         if (spawners == null || spawners.Count == 0)
@@ -30,6 +35,7 @@ public class GameManager : MonoBehaviour
         state = new StateMachine();
         state.ChangeState(new PlayingState(state));
         StartWave();
+        
     }
     private void Update()
     {

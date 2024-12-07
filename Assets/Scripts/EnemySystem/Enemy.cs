@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -10,10 +11,33 @@ public class Enemy : MonoBehaviour
     public int damageAmount = 1;
     private HealthHandler healthHandler;
     private GameManager GameManager;
+    public enum EntityType
+    {
+        Player,
+        Enemy,
+        Npc,
+        Tree,
+        House,
+        Door
+    }
+    public interface IEntitiesService
+    {
+        public T GetEntity<T>(EntityType entityType) where T : MonoBehaviour;
+    }
+    public class EntityService : IEntitiesService
+    {
+        private Dictionary<EntityType, List<MonoBehaviour>> entitiesByType;
+        public T GetEntity<T>(EntityType entityType) where T : MonoBehaviour
+        {
+            MonoBehaviour entityFound = null;
+            //Find the entity
+            return entityFound as T;
+        }
+    }
     private void Start()
     {
 
-        var playerController = ServiceLocator.GetService<PlayerController>();
+        var playerController = ServiceLocator.GetService<IEntitiesService>().GetEntity<PlayerController>(EntityType.Player);
         healthHandler = gameObject.AddComponent<HealthHandler>();
         healthHandler.maxHp = 1;
         healthHandler.Awake();

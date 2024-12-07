@@ -7,6 +7,9 @@ public class BulletFactory : MonoBehaviour
     public WeaponScriptable weaponData;
     public int poolSize = 1;  
     private Queue<Rigidbody2D> bulletPool = new Queue<Rigidbody2D>();
+
+    // No conectar factory pool con la bala como si fueran "hermanos"   //hacer bullet manager para la pool xd
+
     void Start()
     {
         InitializeBulletPool();
