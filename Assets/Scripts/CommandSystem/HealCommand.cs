@@ -6,13 +6,13 @@ using UnityEngine;
 public class HealCommand : Command
 {
     [SerializeField] private int healAmount = 30;
-    public override void execute()
+    public override void Execute()
     {
         GameObject player = GameObject.FindGameObjectWithTag("player");
         HealthHandler wrapper = player.GetComponent<HealthHandler>();
         wrapper.Heal(healAmount);
     }
-    public override void execute(string[] args)
+    public override void Execute(string[] args)
     {
         GameObject player = GameObject.FindGameObjectWithTag("player");
         HealthHandler wrapper = player.GetComponent<HealthHandler>();

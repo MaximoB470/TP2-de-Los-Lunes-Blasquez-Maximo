@@ -17,9 +17,9 @@ public class ShopManager : MonoBehaviour, IShopManager
     public GameObject MK;
     private StateMachine state;
 
-    public void Awake()
+    public void Start()
     {
-        ServiceLocator.Register<IShopManager>(this);
+        ServiceLocator.Instance.Register<IShopManager>(this);
     }
 
     public void BuyDash()
@@ -44,7 +44,7 @@ public class ShopManager : MonoBehaviour, IShopManager
         {
             state = new StateMachine();
             playerController.points -= escapeCost;
-            var gameManager = ServiceLocator.GetService<GameManager>();
+            var gameManager = ServiceLocator.Instance.GetService<GameManager>();
             state.ChangeState(new VictoryState(state));
             gameManager.isActive = false;
             

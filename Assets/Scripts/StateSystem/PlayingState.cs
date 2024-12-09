@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayingState : GameState
 {
-    public PlayingState(StateMachine manager) : base(manager) { }
+    public PlayingState(StateMachine manager) : base(manager) 
+    {
+        
+    }
 
     private StateMachine state;  
     public override void Enter()
     {
-        var uiManager = ServiceLocator.GetService<IUImanager>();
+        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
         uiManager.HideAllMenus();
         Time.timeScale = 1f;
         Debug.Log("Entering Playing State");

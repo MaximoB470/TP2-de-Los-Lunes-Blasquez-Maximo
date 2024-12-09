@@ -5,15 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Commands/ForceSkipRound")]
 public class ForceSkipRound : Command
 {
-    public override void execute()
+    public override void Execute()
     {
-        var gameManager = ServiceLocator.GetService<GameManager>();
+        var gameManager = ServiceLocator.Instance.GetService<GameManager>();
         gameManager.StartWave();
         gameManager.currentWave++;
     }
-    public override void execute(string[] args)
+    public override void Execute(string[] args)
     {
-        var gameManager = ServiceLocator.GetService<GameManager>();
+        var gameManager = ServiceLocator.Instance.GetService<GameManager>();
         gameManager.StartWave();
         gameManager.currentWave++;
     }

@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public interface Icommand
+public interface ICommand
 {
-    public void Setup(TextWriter writer);
-    public string Name {get;}
-    public void execute();
-    public void execute(string[] args);
-    public List <string> Aliases {get;}
+    void Setup(TextWriter writer);
+    string Name { get; }
+    void Execute();
+    void Execute(string[] args);
+    List<string> Aliases { get; }
 }
-public abstract class Command : ScriptableObject, Icommand
+public abstract class Command : ScriptableObject, ICommand
 {
     [field: SerializeField] public List<string> Aliases { get; set; }
     public string Name => name;
-    public abstract void execute();
-    public abstract void execute(string[] args);
+    public abstract void Execute();
+    public abstract void Execute(string[] args);
     public void Setup(TextWriter writer)
     {
         throw new NotImplementedException();

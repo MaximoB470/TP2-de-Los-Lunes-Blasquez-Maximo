@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
   
     private void Start()
     {
-        var playerController = ServiceLocator.GetService<PlayerController>();
+        var playerController = ServiceLocator.Instance.GetService<PlayerController>();
         if (playerController != null)
         {
             player = playerController.transform; 
@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
 
         if (healthHandler.Life <= 0)
         {
-            var gameManager = ServiceLocator.GetService<GameManager>();
+            var gameManager = ServiceLocator.Instance.GetService<GameManager>();
             gameManager.EnemyDefeated(); 
             Destroy(gameObject); 
         }
@@ -51,10 +51,10 @@ public class Enemy : MonoBehaviour
             var playerHealth = collision.gameObject.GetComponent<HealthHandler>();
             if (playerHealth != null)
             {
-                var gameManager = ServiceLocator.GetService<GameManager>();
+                var gameManager = ServiceLocator.Instance.GetService<GameManager>();
                 playerHealth.GetDamage(damageAmount);
                 var audioService = new AudioService();
-                ServiceLocator.Register<IAudioService>(audioService);
+                ServiceLocator.Instance.Register<IAudioService>(audioService);
                 audioService.HitSound();
 
             }

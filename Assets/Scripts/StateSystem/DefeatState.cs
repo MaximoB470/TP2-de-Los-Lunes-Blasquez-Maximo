@@ -9,9 +9,9 @@ public class DefeatState : GameState
     public override void Enter()
     {
         state = new StateMachine();
-        var uiManager = ServiceLocator.GetService<IUImanager>();
+        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
         var audioService = new AudioService();
-        ServiceLocator.Register<IAudioService>(audioService);
+        ServiceLocator.Instance.Register<IAudioService>(audioService);
         uiManager.ShowDefeatMenu();
         audioService.StopBackgroundMusic();
         Time.timeScale = 0f; 

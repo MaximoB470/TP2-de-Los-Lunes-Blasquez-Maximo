@@ -27,7 +27,7 @@ public class WeaponController : MonoBehaviour
         {
             bulletScript.rb.velocity = firePoint.up * bulletScript.speed;
             var audioService = new AudioService();
-            ServiceLocator.Register<IAudioService>(audioService);
+            ServiceLocator.Instance.Register<IAudioService>(audioService);
             audioService.ShootSound();
         }
         Debug.Log("Bullet Factory Spawn");

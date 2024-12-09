@@ -36,14 +36,12 @@ public class PlayerController : MonoBehaviour
     public int HPTracker;
     [SerializeField] private TrailRenderer tr;
     private StateMachine state;
-
-
     private void Start()
     {
-        ServiceLocator.Register<PlayerController>(this);
+        ServiceLocator.Instance.Register<PlayerController>(this);
         state = new StateMachine();
-        var gameManager = ServiceLocator.GetService<GameManager>();
-        ServiceLocator.Register<IGameManager>(gameManager);
+        var gameManager = ServiceLocator.Instance.GetService<GameManager>();
+        ServiceLocator.Instance.Register<IGameManager>(gameManager);
         sp = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
        EquipWeapon(Weapon);
@@ -53,7 +51,6 @@ public class PlayerController : MonoBehaviour
         healthHandler.Awake();
 
         HPTracker = healthHandler.Life;
-        ServiceLocator.Register<PlayerController>(this);
     }
     private void Update()
     {

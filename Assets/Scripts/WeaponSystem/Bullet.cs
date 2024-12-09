@@ -23,9 +23,9 @@ public class Bullet : MonoBehaviour
             var enemyHealth = collision.GetComponent<HealthHandler>();
             if (enemyHealth != null)
             {
-                var playerController = ServiceLocator.GetService<PlayerController>();
+                var playerController = ServiceLocator.Instance.GetService<PlayerController>();
                 var audioService = new AudioService();
-                ServiceLocator.Register<IAudioService>(audioService);
+                ServiceLocator.Instance.Register<IAudioService>(audioService);
                 audioService.HitSound();
                 enemyHealth.GetDamage(damageAmount);
                 playerController.points += 10;

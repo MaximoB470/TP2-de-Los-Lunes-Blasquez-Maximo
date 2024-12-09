@@ -7,6 +7,7 @@ public interface IGameManager
     void StartWave();
     void EnemyDefeated();
     public IEnumerator WaitBeforeNextWave();
+
 }
 public class GameManager : MonoBehaviour, IGameManager
 {
@@ -23,11 +24,12 @@ public class GameManager : MonoBehaviour, IGameManager
     public bool isActive = false;
     public bool ForceWave;
 
+
     private void Start()
     {
         var audioService = new AudioService();
-        ServiceLocator.Register<IAudioService>(audioService);
-        ServiceLocator.Register<IGameManager>(this);
+        ServiceLocator.Instance.Register<IGameManager>(this);
+        ServiceLocator.Instance.Register<IAudioService>(audioService);
         audioService.BackgroundMusic();
         Bench.SetActive(false);
         if (spawners == null || spawners.Count == 0)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public interface IUImanager
 {
@@ -30,14 +31,17 @@ public class UIManager : MonoBehaviour, IUImanager
     private TextMeshProUGUI pointsText;
     private TextMeshProUGUI roundText;
 
+    private PlayerController playerController;
+    private GameManager gameManager;
+
     public GameObject ShopMenu;
-
-
+ 
     private void Start()
     {
-        ServiceLocator.Register<IUImanager>(this);
-        var playerController = ServiceLocator.GetService<PlayerController>();
-        var gameManager = ServiceLocator.GetService<GameManager>();
+        playerController = ServiceLocator.Instance.GetService<PlayerController>();
+        gameManager = ServiceLocator.Instance.GetService<GameManager>();
+        ServiceLocator.Instance.Register<IUImanager>(this);
+
         if (healthTextObject != null)
         {
             healthText = healthTextObject.GetComponent<TextMeshProUGUI>();
@@ -55,15 +59,11 @@ public class UIManager : MonoBehaviour, IUImanager
         UpdatePoints(playerController.points);
         UpdateRound(gameManager.currentWave);
     }
-
     private void Update()
     {
-        var gameManager = ServiceLocator.GetService<GameManager>();
-        var playerController = ServiceLocator.GetService<PlayerController>();
         UpdateHealth(playerController.HPTracker);
         UpdatePoints(playerController.points);
         UpdateRound(gameManager.currentWave);
-
 
         if (gameManager.isActive == true)
         {

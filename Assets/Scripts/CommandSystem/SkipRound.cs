@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Commands/SkipRound")]
-
-
 public class SkipRound : Command
 {
-    public override void execute()
+    public override void Execute()
     {
-        var gameManager = ServiceLocator.GetService<GameManager>();
+        var gameManager = ServiceLocator.Instance.GetService<GameManager>();
         gameManager.ForceWave = true;
-
-        
     }
-    public override void execute(string[] args)
+    public override void Execute(string[] args)
     {
-        var gameManager = ServiceLocator.GetService<GameManager>();
+        var gameManager = ServiceLocator.Instance.GetService<GameManager>();
         gameManager.ForceWave = true;
     }
 }

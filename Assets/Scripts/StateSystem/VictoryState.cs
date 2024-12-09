@@ -10,10 +10,10 @@ using UnityEngine;
         public override void Enter()
         {
             state = new StateMachine();
-            var uiManager = ServiceLocator.GetService<UIManager>();
+            var uiManager = ServiceLocator.Instance.GetService<UIManager>();
             var audioService = new AudioService();
-            ServiceLocator.Register<IAudioService>(audioService);
-            ServiceLocator.Register<IUImanager>(uiManager);
+            ServiceLocator.Instance.Register<IAudioService>(audioService);
+            ServiceLocator.Instance.Register<IUImanager>(uiManager);
             uiManager.ShowVictoryMenu();
             audioService.StopBackgroundMusic();
             Time.timeScale = 0f;

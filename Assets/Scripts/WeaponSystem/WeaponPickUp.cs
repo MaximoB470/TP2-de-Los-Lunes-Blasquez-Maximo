@@ -8,7 +8,7 @@ public class WeaponPickUp : MonoBehaviour, Iinteractable
     private PlayerController player; 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerController>();
+        var playerController = ServiceLocator.Instance.GetService<PlayerController>();
     }
     public void interaction()
     {

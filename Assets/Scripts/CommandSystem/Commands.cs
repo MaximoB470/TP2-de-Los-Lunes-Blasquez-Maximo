@@ -6,11 +6,11 @@ using UnityEngine;
 public class LogSecondsFromStartCmd : Command
 {
     private PlayerController controller;
-    public override void execute()
+    public override void Execute()
     {
         Debug.Log(Time.realtimeSinceStartup);
     }
-    public override void execute(string[] args)
+    public override void Execute(string[] args)
     {
         Debug.Log(Time.realtimeSinceStartup);
     }

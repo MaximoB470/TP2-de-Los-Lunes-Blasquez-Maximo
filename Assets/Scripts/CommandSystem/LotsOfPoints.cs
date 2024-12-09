@@ -5,15 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Commands/LotsOfPoints")]
 public class LotsOfPoints : Command
 {
-    public override void execute()
+    public override void Execute()
     {
-       var playerController = ServiceLocator.GetService<PlayerController>();
+       var playerController = ServiceLocator.Instance.GetService<PlayerController>();
        playerController.points = 99999999;
        Debug.Log("Applying points");
     }
-    public override void execute(string[] args)
+    public override void Execute(string[] args)
     {
-        var playerController = ServiceLocator.GetService<PlayerController>();
+        var playerController = ServiceLocator.Instance.GetService<PlayerController>();
         playerController.points = 99999999;
         Debug.Log("Applying points");
     }

@@ -4,25 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class injectableCommand : Icommand
+public class injectableCommand : ICommand
 {
     public string Name { get; set; }
 
     public List<string> Aliases { get; set; }
-
-    //Summarises List (to remember)
-
-    //private List<string> Aaliases;
-
-    //public List <string> GetAliases() 
-    //{
-    //    return Aaliases;
-    //}
-
-    //public void SetAliases(List<string> aliases) 
-    //{ 
-    //    Aaliases = aliases;
-    //}
 
     public Action DoExecute;
     public Action<string[]> DoExecuteWithArgs;
@@ -34,12 +20,12 @@ public class injectableCommand : Icommand
         DoExecuteWithArgs = doExecuteWithArgs;
     }
 
-    public void execute()
+    public void Execute()
     {
         DoExecute?.Invoke();
     }
 
-    public void execute(string[] args)
+    public void Execute(string[] args)
     {
         DoExecuteWithArgs?.Invoke(args);
     }

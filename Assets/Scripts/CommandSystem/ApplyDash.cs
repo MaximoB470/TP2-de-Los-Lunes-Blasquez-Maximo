@@ -6,15 +6,15 @@ using UnityEngine;
 public class ApplyDash : Command
 {
  
-    public override void execute()
+    public override void Execute()
     {
-        var playerController = ServiceLocator.GetService<PlayerController>();
+        var playerController = ServiceLocator.Instance.GetService<PlayerController>();
         playerController.UnlockDash();
         Debug.Log("Applied Dash");
     }
-    public override void execute(string[] args)
+    public override void Execute(string[] args)
     {
-       var playerController = ServiceLocator.GetService<PlayerController>();
+       var playerController = ServiceLocator.Instance.GetService<PlayerController>();
        playerController.UnlockDash();
        Debug.Log("Applied Dash");
     }

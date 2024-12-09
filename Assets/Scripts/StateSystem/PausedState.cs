@@ -8,7 +8,7 @@ public class PausedState : GameState
     private StateMachine state;
     public override void Enter()
     {
-        var uiManager = ServiceLocator.GetService<IUImanager>();
+        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
         Debug.Log("Entering Paused State");
         Time.timeScale = 0f; 
         uiManager.ShowPauseMenu();
