@@ -7,15 +7,17 @@ public class Bullet : MonoBehaviour
     public float speed = 20f;
     public Rigidbody2D rb;
     public int damageAmount = 1;
-    private BulletFactory bulletFactory; 
-    public void Initialize(BulletFactory factory)
+    private ObjectPool<Bullet> bulletPool;  
+    public void Initialize(ObjectPool<Bullet> pool)
     {
-        bulletFactory = factory; 
+        bulletPool = pool;
     }
+
     private void Start()
     {
         rb.velocity = transform.up * speed;
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("enemies"))
@@ -30,11 +32,7 @@ public class Bullet : MonoBehaviour
                 enemyHealth.GetDamage(damageAmount);
                 playerController.points += 10;
             }
-            bulletFactory.ReturnBulletToPool(rb);
         }
-        else if (collision.CompareTag("Walls"))
-        {
-            bulletFactory.ReturnBulletToPool(rb);
-        }
+        bulletPool.ReturnObject(this); 
     }
 }

@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour, IGameManager
     public bool isActive = false;
     public bool ForceWave;
 
-
     private void Start()
     {
         var audioService = new AudioService();

@@ -7,6 +7,7 @@ public class WeaponController : MonoBehaviour
     public Transform firePoint;
     public BulletFactory bulletFactory;
     public WeaponScriptable weaponData;
+    private ObjectPool<Bullet> bulletPool;
 
     private float shootCooldown;
 
@@ -21,7 +22,7 @@ public class WeaponController : MonoBehaviour
     }
     private void Shoot()
     {
-        Rigidbody2D bullet = bulletFactory.GetBulletFromPool(firePoint);
+        Bullet bullet = bulletPool.GetObject(firePoint);
 
         if (bullet.TryGetComponent<Bullet>(out Bullet bulletScript))
         {
