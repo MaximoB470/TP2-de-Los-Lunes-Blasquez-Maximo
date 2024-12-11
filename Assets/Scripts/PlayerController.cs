@@ -36,9 +36,15 @@ public class PlayerController : MonoBehaviour
     public int HPTracker;
     [SerializeField] private TrailRenderer tr;
     private StateMachine state;
-    private void Start()
+
+    private void Awake()
     {
         ServiceLocator.Instance.Register<PlayerController>(this);
+    }
+
+    private void Start()
+    {
+        
         state = new StateMachine();
         var gameManager = ServiceLocator.Instance.GetService<GameManager>();
         ServiceLocator.Instance.Register<IGameManager>(gameManager);

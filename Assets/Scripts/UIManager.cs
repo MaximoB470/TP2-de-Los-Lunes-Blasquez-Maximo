@@ -38,6 +38,7 @@ public class UIManager : MonoBehaviour, IUImanager
  
     private void Start()
     {
+        HideAllMenus();
         playerController = ServiceLocator.Instance.GetService<PlayerController>();
         gameManager = ServiceLocator.Instance.GetService<GameManager>();
         ServiceLocator.Instance.Register<IUImanager>(this);

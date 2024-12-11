@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -27,21 +28,25 @@ public class ServiceLocator
             return _instance;
         }
     }
-
     public void Register<T>(T service)
     {
-        if (services.ContainsKey(typeof(T)))
-            return;
-
-        services.Add(typeof(T), service);
+        services[typeof(T)] = service; 
     }
-
-    public T GetService<T>()
+    public T GetService<T>(params object[] args)
     {
         if (services.TryGetValue(typeof(T), out object result))
         {
             return (T)result;
         }
-        return default;
+
+        var constructor = typeof(T).GetConstructor(args.Select(a => a.GetType()).ToArray());
+        if (constructor != null)
+        {
+            result = constructor.Invoke(args);
+            services.Add(typeof(T), result);
+            return (T)result;
+        }
+
+        return default(T);
     }
 }

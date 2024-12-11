@@ -13,7 +13,6 @@ public class PlayingState : GameState
     public override void Enter()
     {
         var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
-        uiManager.HideAllMenus();
         Time.timeScale = 1f;
         Debug.Log("Entering Playing State");
     }

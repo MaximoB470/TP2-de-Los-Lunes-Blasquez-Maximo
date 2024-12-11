@@ -24,11 +24,13 @@ public class GameManager : MonoBehaviour, IGameManager
     public bool isActive = false;
     public bool ForceWave;
 
-
+    private void Awake()
+    {
+        ServiceLocator.Instance.Register<IGameManager>(this);
+    }
     private void Start()
     {
         var audioService = new AudioService();
-        ServiceLocator.Instance.Register<IGameManager>(this);
         ServiceLocator.Instance.Register<IAudioService>(audioService);
         audioService.BackgroundMusic();
         Bench.SetActive(false);
