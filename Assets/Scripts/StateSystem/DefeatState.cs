@@ -10,10 +10,7 @@ public class DefeatState : GameState
     {
         state = new StateMachine();
         var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
-        var audioService = new AudioService();
-        ServiceLocator.Instance.Register<IAudioService>(audioService);
         uiManager.ShowDefeatMenu();
-        audioService.StopBackgroundMusic();
         Time.timeScale = 0f; 
         
         Debug.Log("Entering Defeat State");

@@ -6,8 +6,7 @@ public interface IGameManager
 {
     void StartWave();
     void EnemyDefeated();
-    public IEnumerator WaitBeforeNextWave();
-
+    IEnumerator WaitBeforeNextWave(); 
 }
 public class GameManager : MonoBehaviour, IGameManager
 {
@@ -28,8 +27,10 @@ public class GameManager : MonoBehaviour, IGameManager
     {
         ServiceLocator.Instance.Register<IGameManager>(this);
     }
+
     private void Start()
     {
+
         var audioService = new AudioService();
         ServiceLocator.Instance.Register<IAudioService>(audioService);
         audioService.BackgroundMusic();
@@ -69,7 +70,6 @@ public class GameManager : MonoBehaviour, IGameManager
 
         isActive = false;
     }
-
     private IEnumerator SpawnEnemies()
     {
         for (int i = 0; i < enemiesToSpawn; i++)
@@ -81,8 +81,8 @@ public class GameManager : MonoBehaviour, IGameManager
     }
     public void EnemyDefeated()
     {
-        enemiesRemaining--;
 
+        enemiesRemaining--;
         if (enemiesRemaining <= 0)
         {
             Bench.SetActive(true);

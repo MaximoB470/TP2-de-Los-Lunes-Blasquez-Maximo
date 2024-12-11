@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        
         state = new StateMachine();
         var gameManager = ServiceLocator.Instance.GetService<GameManager>();
         ServiceLocator.Instance.Register<IGameManager>(gameManager);
@@ -103,7 +102,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("No interactables found");
             return;
         }
-
         for (int i = 0; i < elements; i++)
         {
             var interactable = interactables[i];
@@ -163,5 +161,8 @@ public class PlayerController : MonoBehaviour
     private void HandleDeath()
     {
         state.ChangeState(new DefeatState(state));
+        var audioService = new AudioService();
+        ServiceLocator.Instance.Register<IAudioService>(audioService);
+        audioService.StopBackgroundMusic();
     }
 }
