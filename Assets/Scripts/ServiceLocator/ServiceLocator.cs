@@ -30,7 +30,8 @@ public class ServiceLocator
     }
     public void Register<T>(T service)
     {
-        services[typeof(T)] = service; 
+        services[typeof(T)] = service;
+        //services.Add(typeof(T), service);
     }
     public T GetService<T>(params object[] args)
     {

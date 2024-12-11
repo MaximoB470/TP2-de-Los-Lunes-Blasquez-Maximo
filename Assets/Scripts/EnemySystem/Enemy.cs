@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
                     audioService.HitSound();
                 }
             }
-            Destroy(gameObject);
+             healthHandler.Life = 0;
         }
     }
 }

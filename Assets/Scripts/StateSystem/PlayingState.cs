@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class PlayingState : GameState
 {
-    public PlayingState(StateMachine manager) : base(manager) 
+    public PlayingState(StateMachine manager) : base(manager)
     {
-        
-    }
 
+    }
     private StateMachine state;  
     public override void Enter()
     {

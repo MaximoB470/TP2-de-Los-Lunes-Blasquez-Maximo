@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
 
 public interface IGameManager
 {
@@ -10,6 +11,7 @@ public interface IGameManager
 }
 public class GameManager : MonoBehaviour, IGameManager
 {
+    public static GameManager Instance { get; private set; }
     [SerializeField] private List<EnemySpawn> spawners; 
     public int currentWave = 1; 
     private int enemiesToSpawn; 
@@ -25,12 +27,21 @@ public class GameManager : MonoBehaviour, IGameManager
 
     private void Awake()
     {
-        ServiceLocator.Instance.Register<IGameManager>(this);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); 
+        }
+        else
+        {
+            Destroy(gameObject);
+            return; // Salir de Awake si no es la instancia principal
+        }
+        ServiceLocator.Instance.Register<GameManager>(this);
     }
 
     private void Start()
     {
-
         var audioService = new AudioService();
         ServiceLocator.Instance.Register<IAudioService>(audioService);
         audioService.BackgroundMusic();
@@ -81,7 +92,6 @@ public class GameManager : MonoBehaviour, IGameManager
     }
     public void EnemyDefeated()
     {
-
         enemiesRemaining--;
         if (enemiesRemaining <= 0)
         {

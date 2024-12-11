@@ -16,7 +16,8 @@ public interface IUImanager
     void HideAllMenus();
 }
 public class UIManager : MonoBehaviour, IUImanager
-{ 
+{
+    public static UIManager Instance { get; private set; }
     [SerializeField] private GameObject healthTextObject;
     [SerializeField] private GameObject pointsTextObject;
     [SerializeField] private GameObject roundTextObject;
@@ -35,9 +36,23 @@ public class UIManager : MonoBehaviour, IUImanager
     private GameManager gameManager;
 
     public GameObject ShopMenu;
- 
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
     private void Start()
     {
+        ServiceLocator.Instance.Register<UIManager>(this);
         HideAllMenus();
         playerController = ServiceLocator.Instance.GetService<PlayerController>();
         gameManager = ServiceLocator.Instance.GetService<GameManager>();
