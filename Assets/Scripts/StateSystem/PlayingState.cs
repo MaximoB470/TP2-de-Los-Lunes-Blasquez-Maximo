@@ -11,18 +11,14 @@ public class PlayingState : GameState
     }
     public override void Enter()
     {
-        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
-        uiManager.HideAllMenus(); 
-        Time.timeScale = 1f; 
+        Time.timeScale = 1f;
         Debug.Log("Entering Playing State");
     }
     public override void Execute()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            state.ChangeState(new PausedState(state));
-        }
+        Debug.Log("Not Used");
     }
+
     public override void Exit()
     {
         Debug.Log("Exiting Playing State");

@@ -35,9 +35,12 @@ public class GameManager : MonoBehaviour, IGameManager
         else
         {
             Destroy(gameObject);
-            return; // Salir de Awake si no es la instancia principal
+            return; 
         }
         ServiceLocator.Instance.Register<GameManager>(this);
+        state = new StateMachine();
+        state.ChangeState(new PlayingState(state));
+        StartWave();
     }
 
     private void Start()
@@ -50,7 +53,6 @@ public class GameManager : MonoBehaviour, IGameManager
         {
             return;
         }
-        StartWave();
     }
     private void Update()
     {

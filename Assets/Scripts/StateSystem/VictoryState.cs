@@ -1,32 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public class VictoryState : GameState
+{
+    public VictoryState(StateMachine manager) : base(manager) { }
 
-
-    public class VictoryState : GameState
+    public override void Enter()
     {
-        public VictoryState(StateMachine manager) : base(manager) { }
-        private StateMachine state;
-        public override void Enter()
-        {
-            state = new StateMachine();
-            var uiManager = ServiceLocator.Instance.GetService<UIManager>();
-            var audioService = new AudioService();
-            ServiceLocator.Instance.Register<IAudioService>(audioService);
-            ServiceLocator.Instance.Register<IUImanager>(uiManager);
-            uiManager.ShowVictoryMenu();
-            audioService.StopBackgroundMusic();
-            Time.timeScale = 0f;
+        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
+        var audioService = new AudioService();
+        ServiceLocator.Instance.Register<IAudioService>(audioService); 
 
-            Debug.Log("Entering Victory State");
-        }
-        public override void Execute()
+        if (uiManager != null)
         {
-            Debug.Log("Not Used");
+            uiManager.ShowVictoryMenu();
         }
-        public override void Exit()
+        if (audioService != null)
         {
-            Debug.Log("Exiting Victory State");
+            audioService.StopBackgroundMusic();
         }
+        Time.timeScale = 0f;
     }
 
+    public override void Execute()
+    {
+        Debug.Log("Not Used");
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("Exiting Victory State");
+    }
+}

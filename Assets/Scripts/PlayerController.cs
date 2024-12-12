@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private float dashingCooldown = 1f;
     public int HPTracker;
     private bool isDead = false;
+    private bool isPaused = false;
     [SerializeField] private TrailRenderer tr;
     private StateMachine state;
 
@@ -153,9 +154,20 @@ public class PlayerController : MonoBehaviour
         ApplyDash = true;
         Debug.Log("Dash unlocked");
     }
-    private void HandlePause() 
+    private void HandlePause()
     {
-        state.ChangeState(new PausedState(state));
+        if (isPaused)
+        {
+            Time.timeScale = 1f;
+            ServiceLocator.Instance.GetService<IUImanager>().HideAllMenus(); 
+            isPaused = false;
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            ServiceLocator.Instance.GetService<IUImanager>().ShowPauseMenu(); 
+            isPaused = true;
+        }
     }
     private void HandleDeath()
     {
