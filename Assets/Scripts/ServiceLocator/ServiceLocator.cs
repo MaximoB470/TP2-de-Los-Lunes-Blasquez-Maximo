@@ -8,8 +8,10 @@ using UnityEngine;
 public class ServiceLocator
 {
     private static ServiceLocator _instance;
-    private static readonly object _lock = new object();
-    private readonly Dictionary<Type, object> services = new Dictionary<Type, object>();
+    private static object _lock = new object();
+    private Dictionary<Type, object> services = new Dictionary<Type, object>();
+    private Dictionary<Type, object> servicesByType = new Dictionary<Type, object>();
+    private Dictionary<string, object> servicesByName = new Dictionary<string, object>();
     private ServiceLocator() { }
     public static ServiceLocator Instance
     {
@@ -32,6 +34,14 @@ public class ServiceLocator
     {
         services[typeof(T)] = service;
         //services.Add(typeof(T), service);
+    }
+    public void SetService(string name, object service)
+    {
+        if (servicesByName.ContainsKey(name))
+        {
+            Debug.LogWarning($"Service with name '{name}' Overwriting");
+        }
+        servicesByName[name] = service;
     }
     public T GetService<T>(params object[] args)
     {

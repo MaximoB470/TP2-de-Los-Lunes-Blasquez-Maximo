@@ -3,82 +3,43 @@ using System.Windows.Input;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CommandService : MonoBehaviour
+public class CommandConsoleService : MonoBehaviour
 {
-    [SerializeField] private List<Button> buttons;
-    [SerializeField] private string commandToExecute;
-    [SerializeField] private List<string> commandNames;
-    [SerializeField] private List<Command> preloadedCommands;
-    private Dictionary<string, ICommand> commandsDictionary = new Dictionary<string, ICommand>();
-    void Start()
+    [SerializeField] private List<Command> commands;
+    private Dictionary<string, ICommand> commandDictionary = new();
+    private void Awake()
     {
-        LoadAndRegisterCommands();
-    }
-    public void AddCommand(ICommand command)
-    {
-        if (!commandsDictionary.ContainsKey(command.Name))
-        {
-            commandsDictionary[command.Name] = command;
-            foreach (var alias in command.Aliases)
-            {
-                if (!commandsDictionary.ContainsKey(alias))
-                {
-                    commandsDictionary[alias] = command;
-                }
-                else
-                {
-                    Debug.LogWarning($"Alias '{alias}' Was Up");
-                }
-            }
-        }
-    }
-    private void LoadAndRegisterCommands()
-    {
-        Command[] commands = Resources.LoadAll<Command>("Commands");
+        ServiceLocator.Instance.SetService(nameof(CommandConsoleService), this);
 
         foreach (var command in commands)
         {
             AddCommand(command);
         }
     }
-    private void SetupButtons()
+    public void AddCommand(ICommand command)
     {
-        if (buttons.Count != commandNames.Count)
+        if (!commandDictionary.TryAdd(command.Name, command))
         {
-            return;
-        }
-        for (int i = 0; i < buttons.Count; i++)
-        {
-            string commandName = commandNames[i];
-            if (commandsDictionary.ContainsKey(commandName))
-            {
-                buttons[i].onClick.AddListener(() => ExecuteCommand(commandName));
-            }
+            Debug.LogWarning($"Command '{command.Name}' already exists");
         }
     }
-    [ContextMenu("Execute Command")]
-    private void ExecuteCommandFromInspector()
+    public void RemoveCommand(ICommand command)
     {
-        ExecuteCommand(commandToExecute);
-    }
-    public void ExecuteCommand(string name, string[] args = null)
-    {
-        if (commandsDictionary.TryGetValue(name, out ICommand command))
+        commandDictionary.Remove(command.Name);
+        foreach (var alias in command.Aliases)
         {
-            if (args == null || args.Length == 0)
-            {
-                command.Execute();
-            }
-            else
-            {
-                command.Execute(args);
-            }
-
-            Debug.Log($"Command '{name}' Executed");
+            commandDictionary.Remove(alias);
+        }
+    }
+    public void ExecuteCommand(string alias, params string[] args)
+    {
+        if (commandDictionary.TryGetValue(alias, out ICommand command))
+        {
+            command.Execute(args);
         }
         else
         {
-            Debug.LogWarning($"Command '{name}' Not Found");
+            Debug.LogError("not found");
         }
     }
 }
