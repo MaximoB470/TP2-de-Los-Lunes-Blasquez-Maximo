@@ -15,15 +15,9 @@ public class StateMachine
     }
     public void ChangeState(GameState newState)
     {
-        if (currentState != null)
-        {
-            currentState.Exit();
-        }
+        if (currentState == newState) return; 
+        currentState?.Exit(); 
         currentState = newState;
-
-        if (currentState != null)
-        {
-            currentState.Enter();
-        }
+        currentState?.Enter(); 
     }
 }

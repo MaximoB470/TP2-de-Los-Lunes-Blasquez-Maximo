@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
-
     public float speed = 5f;
     public Rigidbody2D rb;
     private SpriteRenderer sp;
@@ -34,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
     public int HPTracker;
+    private bool isDead = false;
     [SerializeField] private TrailRenderer tr;
     private StateMachine state;
 
@@ -41,7 +41,6 @@ public class PlayerController : MonoBehaviour
     {
         ServiceLocator.Instance.Register<PlayerController>(this);
     }
-
     private void Start()
     {
         state = new StateMachine();
@@ -78,8 +77,8 @@ public class PlayerController : MonoBehaviour
         if(healthHandler.Life <= 0) 
         {
             HandleDeath();
+
         }
-        
         if (Input.GetKeyDown(KeyCode.P))
         {
             HandlePause();
@@ -160,9 +159,14 @@ public class PlayerController : MonoBehaviour
     }
     private void HandleDeath()
     {
-        state.ChangeState(new DefeatState(state));
-        var audioService = new AudioService();
-        ServiceLocator.Instance.Register<IAudioService>(audioService);
-        audioService.StopBackgroundMusic();
+        if (isDead) return; //if player´s dead, not repeat
+        isDead = true; 
+        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
+        if (uiManager != null)
+        {
+            uiManager.ShowDefeatMenu();
+        }
+        state.ChangeState(new DefeatState(state)); 
     }
+
 }

@@ -10,21 +10,40 @@ public interface IShopManager
 }
 public class ShopManager : MonoBehaviour, IShopManager
 {
+    public static ShopManager Instance { get; private set; }
+
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private int dashCost = 300;                               
+    [SerializeField] private int dashCost = 300;
     [SerializeField] private int escapeCost = 2000;
-    [SerializeField] private int MEedkitCost = 300;
-    public GameObject MK;
+    [SerializeField] private int medkitCost = 300;
+    [SerializeField] private GameObject MK;
+
     private StateMachine state;
 
-    public void Start()
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+    private void Start()
     {
         ServiceLocator.Instance.Register<IShopManager>(this);
+        if (playerController == null)
+        {
+            playerController = ServiceLocator.Instance.GetService<PlayerController>();
+        }
     }
-
     public void BuyDash()
     {
-        if (playerController.points >= dashCost)
+        if (playerController != null && playerController.points >= dashCost)
         {
             playerController.points -= dashCost;
             playerController.UnlockDash();
@@ -32,22 +51,27 @@ public class ShopManager : MonoBehaviour, IShopManager
     }
     public void BuyMedKit()
     {
-        if (playerController.points >= MEedkitCost)
+        if (playerController != null && playerController.points >= medkitCost)
         {
-            playerController.points -= MEedkitCost;
-            MK.SetActive(true);
+            playerController.points -= medkitCost;
+            if (MK != null)
+            {
+                MK.SetActive(true);
+            }
         }
     }
     public void BuyEscape()
     {
-        if (playerController.points >= escapeCost)
+        if (playerController != null && playerController.points >= escapeCost)
         {
             state = new StateMachine();
             playerController.points -= escapeCost;
             var gameManager = ServiceLocator.Instance.GetService<GameManager>();
-            state.ChangeState(new VictoryState(state));
-            gameManager.isActive = false;
-            
+            if (gameManager != null)
+            {
+                state.ChangeState(new VictoryState(state));
+                gameManager.isActive = false;
+            }
         }
     }
 }

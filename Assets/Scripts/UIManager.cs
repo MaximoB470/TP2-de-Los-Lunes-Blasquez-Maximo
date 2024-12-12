@@ -18,6 +18,7 @@ public interface IUImanager
 public class UIManager : MonoBehaviour, IUImanager
 {
     public static UIManager Instance { get; private set; }
+
     [SerializeField] private GameObject healthTextObject;
     [SerializeField] private GameObject pointsTextObject;
     [SerializeField] private GameObject roundTextObject;
@@ -66,38 +67,46 @@ public class UIManager : MonoBehaviour, IUImanager
         {
             pointsText = pointsTextObject.GetComponent<TextMeshProUGUI>();
         }
-
         if (roundTextObject != null)
         {
             roundText = roundTextObject.GetComponent<TextMeshProUGUI>();
         }
-        UpdateHealth(playerController.HPTracker);
-        UpdatePoints(playerController.points);
-        UpdateRound(gameManager.currentWave);
+        UpdateHealth(playerController != null ? playerController.HPTracker : 0);
+        UpdatePoints(playerController != null ? playerController.points : 0);
+        UpdateRound(gameManager != null ? gameManager.currentWave : 0);
     }
     private void Update()
     {
-        UpdateHealth(playerController.HPTracker);
-        UpdatePoints(playerController.points);
-        UpdateRound(gameManager.currentWave);
-
-        if (gameManager.isActive == true)
+        if (playerController != null)
         {
-            waitTextObject.SetActive(true);
-            roundTextObject.SetActive(false);
-            roundTextObject2.SetActive(false);
+            UpdateHealth(playerController.HPTracker);
+            UpdatePoints(playerController.points);
         }
-        else
+        if (gameManager != null)
         {
-            waitTextObject.SetActive(false);
-            roundTextObject.SetActive(true);
-            roundTextObject2.SetActive(true);
-            ShopMenu.SetActive(false);
+            UpdateRound(gameManager.currentWave);
+
+            if (gameManager.isActive)
+            {
+                if (waitTextObject != null) waitTextObject.SetActive(true);
+                if (roundTextObject != null) roundTextObject.SetActive(false);
+                if (roundTextObject2 != null) roundTextObject2.SetActive(false);
+            }
+            else
+            {
+                if (waitTextObject != null) waitTextObject.SetActive(false);
+                if (roundTextObject != null) roundTextObject.SetActive(true);
+                if (roundTextObject2 != null) roundTextObject2.SetActive(true);
+                if (ShopMenu != null) ShopMenu.SetActive(false);
+            }
         }
     }
     public void ExitShop()
     {
-        ShopMenu.SetActive(false);
+        if (ShopMenu != null)
+        {
+            ShopMenu.SetActive(false);
+        }
     }
     public void UpdateHealth(int health)
     {
@@ -122,24 +131,38 @@ public class UIManager : MonoBehaviour, IUImanager
     }
     public void ShowPauseMenu()
     {
-        pauseMenu.SetActive(true);
-
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(true);
+        }
     }
     public void ShowVictoryMenu()
     {
-        victoryMenu.SetActive(true);
+        if (victoryMenu != null)
+        {
+            victoryMenu.SetActive(true);
+        }
     }
     public void ShowDefeatMenu()
     {
-        defeatMenu.SetActive(true);
+        if (defeatMenu != null)
+        {
+            defeatMenu.SetActive(true);
+        }
     }
     public void HideAllMenus()
     {
         if (pauseMenu != null)
+        {
             pauseMenu.SetActive(false);
+        }
         if (victoryMenu != null)
+        {
             victoryMenu.SetActive(false);
+        }
         if (defeatMenu != null)
+        {
             defeatMenu.SetActive(false);
+        }
     }
 }

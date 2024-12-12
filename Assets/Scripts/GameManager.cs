@@ -50,10 +50,7 @@ public class GameManager : MonoBehaviour, IGameManager
         {
             return;
         }
-        state = new StateMachine();
-        state.ChangeState(new PlayingState(state));
         StartWave();
-        
     }
     private void Update()
     {
@@ -69,7 +66,6 @@ public class GameManager : MonoBehaviour, IGameManager
             StartCoroutine(WaitBeforeNextWave());
             enemiesRemaining = 0;
         }
-        state.Update();
     }
     public void StartWave()
     {

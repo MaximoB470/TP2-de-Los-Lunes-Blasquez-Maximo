@@ -5,20 +5,27 @@ using UnityEngine;
 public class DefeatState : GameState
 {
     public DefeatState(StateMachine manager) : base(manager) { }
-    private StateMachine state;
     public override void Enter()
     {
-        state = new StateMachine();
-        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
-        uiManager.ShowDefeatMenu();
-        Time.timeScale = 0f; 
-        
         Debug.Log("Entering Defeat State");
+        var audioService = ServiceLocator.Instance.GetService<IAudioService>();
+        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
+
+        if (audioService != null)
+        {
+            audioService.StopBackgroundMusic();
+        }
+        if (uiManager != null)
+        {
+            uiManager.ShowDefeatMenu();
+        }
+        Time.timeScale = 0f; 
     }
     public override void Execute()
     {
         Debug.Log("Not Used");
     }
+
     public override void Exit()
     {
         Debug.Log("Exiting Defeat State");
