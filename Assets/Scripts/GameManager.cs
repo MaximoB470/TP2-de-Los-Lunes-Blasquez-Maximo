@@ -40,11 +40,11 @@ public class GameManager : MonoBehaviour, IGameManager
         ServiceLocator.Instance.Register<GameManager>(this);
         state = new StateMachine();
         state.ChangeState(new PlayingState(state));
-        StartWave();
+       
     }
-
     private void Start()
     {
+        StartWave();
         var audioService = new AudioService();
         ServiceLocator.Instance.Register<IAudioService>(audioService);
         audioService.BackgroundMusic();

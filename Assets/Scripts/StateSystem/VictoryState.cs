@@ -8,25 +8,15 @@ public class VictoryState : GameState
     public override void Enter()
     {
         var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
-        var audioService = new AudioService();
-        ServiceLocator.Instance.Register<IAudioService>(audioService); 
-
-        if (uiManager != null)
-        {
-            uiManager.ShowVictoryMenu();
-        }
-        if (audioService != null)
-        {
-            audioService.StopBackgroundMusic();
-        }
-        Time.timeScale = 0f;
+        var audioService = ServiceLocator.Instance.GetService<IAudioService>();
+        audioService.StopBackgroundMusic();
+        uiManager?.ShowVictoryMenu();
+        Time.timeScale = 0f;  
     }
-
     public override void Execute()
     {
-        Debug.Log("Not Used");
+        Debug.Log("Executing Victory State");
     }
-
     public override void Exit()
     {
         Debug.Log("Exiting Victory State");
