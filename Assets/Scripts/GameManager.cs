@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static Unity.Collections.AllocatorManager;
 
 public interface IGameManager
@@ -27,15 +28,15 @@ public class GameManager : MonoBehaviour, IGameManager
 
     private void Awake()
     {
+
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); 
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject);
-            return; 
+            Destroy(gameObject); 
         }
         ServiceLocator.Instance.Register<GameManager>(this);
         state = new StateMachine();
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour, IGameManager
             return;
         }
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -69,6 +71,8 @@ public class GameManager : MonoBehaviour, IGameManager
             enemiesRemaining = 0;
         }
     }
+
+
     public void StartWave()
     {
         enemiesToSpawn = 5 * currentWave;
@@ -107,4 +111,7 @@ public class GameManager : MonoBehaviour, IGameManager
         StartWave();
         ForceWave = false;
     }
+
+
+
 }

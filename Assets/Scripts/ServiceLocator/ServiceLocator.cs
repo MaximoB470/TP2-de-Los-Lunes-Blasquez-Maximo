@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-
 public class ServiceLocator
 {
     private static ServiceLocator _instance;
@@ -49,7 +47,6 @@ public class ServiceLocator
         {
             return (T)result;
         }
-
         var constructor = typeof(T).GetConstructor(args.Select(a => a.GetType()).ToArray());
         if (constructor != null)
         {

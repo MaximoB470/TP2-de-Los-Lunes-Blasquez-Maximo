@@ -5,7 +5,7 @@ using UnityEngine;
 public class CommandButton : MonoBehaviour
 {
     [SerializeField] private string commandAlias; 
-    [SerializeField] private string arguments;   
+    private string arguments;
     public void OnClick()
     {
         var commandConsoleService = ServiceLocator.Instance.GetService<CommandConsoleService>();

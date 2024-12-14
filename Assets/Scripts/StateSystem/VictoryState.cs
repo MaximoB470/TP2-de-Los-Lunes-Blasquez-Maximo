@@ -7,7 +7,7 @@ public class VictoryState : GameState
 
     public override void Enter()
     {
-        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
+        var uiManager = ServiceLocator.Instance.GetService<UIManager>();
         var audioService = ServiceLocator.Instance.GetService<IAudioService>();
         audioService.StopBackgroundMusic();
         uiManager?.ShowVictoryMenu();

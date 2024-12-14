@@ -9,7 +9,7 @@ public class DefeatState : GameState
     {
         Debug.Log("Entering Defeat State");
         var audioService = ServiceLocator.Instance.GetService<IAudioService>();
-        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
+        var uiManager = ServiceLocator.Instance.GetService<UIManager>();
 
         if (audioService != null)
         {

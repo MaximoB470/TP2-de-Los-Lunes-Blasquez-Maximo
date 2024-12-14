@@ -8,7 +8,7 @@ public class PausedState : GameState
 
     public override void Enter()
     {
-        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
+        var uiManager = ServiceLocator.Instance.GetService<UIManager>();
         Debug.Log("Entering Paused State");
         Time.timeScale = 0f; 
         uiManager?.ShowPauseMenu();
@@ -18,7 +18,7 @@ public class PausedState : GameState
     }
     public override void Exit()
     {
-        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
+        var uiManager = ServiceLocator.Instance.GetService<UIManager>();
         Debug.Log("Exiting Paused State");
         Time.timeScale = 1f;
         uiManager?.HideAllMenus();
