@@ -22,4 +22,6 @@ public abstract class Command : ScriptableObject, ICommand
     {
         throw new NotImplementedException();
     }
+    public IEnumerable<string> _Aliases => Aliases;
+
 }

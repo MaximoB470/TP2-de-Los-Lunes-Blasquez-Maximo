@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using static Unity.Collections.AllocatorManager;
 
 public interface IGameManager
@@ -19,32 +21,29 @@ public class GameManager : MonoBehaviour, IGameManager
     public int waveRestTime = 30; 
     public GameObject Bench;
     public GameObject CommandList;
-
     private StateMachine state;
-    
     public bool isActive = false;
     public bool ForceWave;
-
     private void Awake()
     {
+
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); 
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject);
-            return; 
+            Destroy(gameObject); 
         }
         ServiceLocator.Instance.Register<GameManager>(this);
         state = new StateMachine();
         state.ChangeState(new PlayingState(state));
-        StartWave();
+       
     }
-
     private void Start()
     {
+        StartWave();
         var audioService = new AudioService();
         ServiceLocator.Instance.Register<IAudioService>(audioService);
         audioService.BackgroundMusic();
@@ -91,6 +90,8 @@ public class GameManager : MonoBehaviour, IGameManager
     public void EnemyDefeated()
     {
         enemiesRemaining--;
+        var playerController = ServiceLocator.Instance.GetService<PlayerController>();
+        playerController.points += 10;
         if (enemiesRemaining <= 0)
         {
             Bench.SetActive(true);

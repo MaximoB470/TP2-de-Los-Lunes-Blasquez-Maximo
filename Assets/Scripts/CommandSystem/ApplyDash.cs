@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Commands/ApplyDash")]
 public class ApplyDash : Command
 {
- 
     public override void Execute()
     {
         var playerController = ServiceLocator.Instance.GetService<PlayerController>();

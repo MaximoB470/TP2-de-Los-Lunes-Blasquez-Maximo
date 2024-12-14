@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour
     public int damageAmount = 1;
     private HealthHandler healthHandler;
     private GameManager gameManager;
-
     private void Start()
     {
         gameManager = ServiceLocator.Instance.GetService<GameManager>();
@@ -20,7 +19,6 @@ public class Enemy : MonoBehaviour
         {
             player = playerController.transform;
         }
-
         healthHandler = gameObject.AddComponent<HealthHandler>();
         healthHandler.maxHp = 1;
         healthHandler.Awake();
@@ -46,7 +44,6 @@ public class Enemy : MonoBehaviour
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("player"))

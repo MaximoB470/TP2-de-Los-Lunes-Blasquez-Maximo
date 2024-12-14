@@ -159,13 +159,13 @@ public class PlayerController : MonoBehaviour
         if (isPaused)
         {
             Time.timeScale = 1f;
-            ServiceLocator.Instance.GetService<IUImanager>().HideAllMenus(); 
+            ServiceLocator.Instance.GetService<UIManager>().HideAllMenus(); 
             isPaused = false;
         }
         else
         {
             Time.timeScale = 0f;
-            ServiceLocator.Instance.GetService<IUImanager>().ShowPauseMenu(); 
+            ServiceLocator.Instance.GetService<UIManager>().ShowPauseMenu(); 
             isPaused = true;
         }
     }
@@ -173,7 +173,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead) return; //if player´s dead, not repeat
         isDead = true; 
-        var uiManager = ServiceLocator.Instance.GetService<IUImanager>();
+        var uiManager = ServiceLocator.Instance.GetService<UIManager>();
         if (uiManager != null)
         {
             uiManager.ShowDefeatMenu();

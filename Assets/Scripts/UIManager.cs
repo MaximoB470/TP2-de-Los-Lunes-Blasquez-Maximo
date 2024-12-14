@@ -165,4 +165,5 @@ public class UIManager : MonoBehaviour, IUImanager
             defeatMenu.SetActive(false);
         }
     }
+
 }

@@ -16,10 +16,12 @@ public class ShopManager : MonoBehaviour, IShopManager
     [SerializeField] private int dashCost = 300;
     [SerializeField] private int escapeCost = 2000;
     [SerializeField] private int medkitCost = 300;
-    [SerializeField] private GameObject MK;
+
+    [SerializeField] private GameObject medKitPrefab; 
+    [SerializeField] private Transform spawnPoint;
+    private MedKitFactory medKitFactory;
 
     private StateMachine state;
-
     private void Awake()
     {
         if (Instance == null)
@@ -54,9 +56,17 @@ public class ShopManager : MonoBehaviour, IShopManager
         if (playerController != null && playerController.points >= medkitCost)
         {
             playerController.points -= medkitCost;
-            if (MK != null)
+
+            if (medKitFactory == null)
             {
-                MK.SetActive(true);
+                medKitFactory = new MedKitFactory();
+            }
+            MedKit medKit = medKitFactory.GetMedKit(10);
+            GameObject medKitInstance = Instantiate(medKitPrefab, spawnPoint.position, Quaternion.identity);
+            MedKitPickUp medKitPickUp = medKitInstance.GetComponent<MedKitPickUp>();
+            if (medKitPickUp != null)
+            {
+                medKitPickUp.Initialize(medKit);
             }
         }
     }
