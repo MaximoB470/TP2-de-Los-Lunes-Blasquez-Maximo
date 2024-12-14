@@ -15,6 +15,7 @@ public class PausedState : GameState
     }
     public override void Execute()
     {
+        Debug.Log("Not Used");
     }
     public override void Exit()
     {

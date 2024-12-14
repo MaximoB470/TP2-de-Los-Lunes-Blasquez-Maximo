@@ -20,7 +20,6 @@ public class PlayingState : GameState
     {
         Debug.Log("Not Used");
     }
-
     public override void Exit()
     {
         Debug.Log("Exiting Playing State");

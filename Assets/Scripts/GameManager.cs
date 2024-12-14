@@ -21,12 +21,9 @@ public class GameManager : MonoBehaviour, IGameManager
     public int waveRestTime = 30; 
     public GameObject Bench;
     public GameObject CommandList;
-
     private StateMachine state;
-    
     public bool isActive = false;
     public bool ForceWave;
-
     private void Awake()
     {
 
@@ -56,7 +53,6 @@ public class GameManager : MonoBehaviour, IGameManager
             return;
         }
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -112,7 +108,4 @@ public class GameManager : MonoBehaviour, IGameManager
         StartWave();
         ForceWave = false;
     }
-
-
-
 }

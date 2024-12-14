@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class MedKit
 {
-    private readonly int healAmount; 
+    private int healAmount; 
     public MedKit(int healAmount)
     {
         this.healAmount = healAmount;
     }
-
     public void Use(PlayerController player)
     {
         var healthHandler = player.GetComponent<HealthHandler>();

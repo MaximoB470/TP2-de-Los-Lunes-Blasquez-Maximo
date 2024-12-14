@@ -8,7 +8,6 @@ public class ServiceLocator
     private static ServiceLocator _instance;
     private static object _lock = new object();
     private Dictionary<Type, object> services = new Dictionary<Type, object>();
-    private Dictionary<Type, object> servicesByType = new Dictionary<Type, object>();
     private Dictionary<string, object> servicesByName = new Dictionary<string, object>();
     private ServiceLocator() { }
     public static ServiceLocator Instance
@@ -31,13 +30,12 @@ public class ServiceLocator
     public void Register<T>(T service)
     {
         services[typeof(T)] = service;
-        //services.Add(typeof(T), service);
     }
     public void SetService(string name, object service)
     {
         if (servicesByName.ContainsKey(name))
         {
-            Debug.LogWarning($"Service with name '{name}' Overwriting");
+            return; 
         }
         servicesByName[name] = service;
     }
@@ -56,5 +54,33 @@ public class ServiceLocator
         }
 
         return default(T);
+    }
+    public T GetCommandService<T>(params object[] args) where T : class
+    {
+        if (services.TryGetValue(typeof(T), out object service))
+        {
+            return (T)service;
+        }
+
+        if (typeof(T).IsSubclassOf(typeof(MonoBehaviour)))
+        {
+            var gameObject = new GameObject(typeof(T).Name);
+            var newService = gameObject.AddComponent(typeof(T)) as T;
+            services[typeof(T)] = newService;
+            return newService;
+        }
+        var constructor = typeof(T).GetConstructor(args.Select(arg => arg.GetType()).ToArray());
+        if (constructor != null)
+        {
+            service = constructor.Invoke(args);
+            services[typeof(T)] = service;
+            return (T)service;
+        }
+
+        return null;
+    }
+    public bool IsServiceRegistered(string name)
+    {
+        return servicesByName.ContainsKey(name);
     }
 }

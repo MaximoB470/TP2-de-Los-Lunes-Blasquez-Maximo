@@ -8,5 +8,4 @@ public class WeaponScriptable : ScriptableObject
     [Header("General Settings")]
     public float shootRate;
     public float shootTime;
-
 }

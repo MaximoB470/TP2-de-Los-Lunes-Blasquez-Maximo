@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: New Force Skip Round
   m_EditorClassIdentifier: 
   <Aliases>k__BackingField:
-  - ForceWaitRound
+  - Force
