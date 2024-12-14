@@ -8,7 +8,7 @@ public interface IBulletFactory
 public class BulletFactory : MonoBehaviour, IBulletFactory
 {
     public static BulletFactory Instance { get; private set; }
-    public Bullet bulletPrefab;
+    public BulletPool bulletPool;
 
     public void Start()
     {
@@ -17,8 +17,9 @@ public class BulletFactory : MonoBehaviour, IBulletFactory
 
     public Bullet CreateBullet(Transform firePoint)
     {
-        Bullet newBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        newBullet.Initialize(firePoint);  
+        Bullet newBullet = bulletPool.GetFromPool();
+        newBullet.SetPool(bulletPool); 
+        newBullet.Initialize(firePoint);
         return newBullet;
     }
 }

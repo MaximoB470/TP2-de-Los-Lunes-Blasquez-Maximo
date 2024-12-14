@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using static Unity.Collections.AllocatorManager;
 
 public interface IGameManager
@@ -71,8 +72,6 @@ public class GameManager : MonoBehaviour, IGameManager
             enemiesRemaining = 0;
         }
     }
-
-
     public void StartWave()
     {
         enemiesToSpawn = 5 * currentWave;
@@ -95,6 +94,8 @@ public class GameManager : MonoBehaviour, IGameManager
     public void EnemyDefeated()
     {
         enemiesRemaining--;
+        var playerController = ServiceLocator.Instance.GetService<PlayerController>();
+        playerController.points += 10;
         if (enemiesRemaining <= 0)
         {
             Bench.SetActive(true);
